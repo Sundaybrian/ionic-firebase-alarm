@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import {NavController } from '@ionic/angular';
-import { AlarmPage } from '../alarm/alarm.page';
+import { alarmRefPage } from '../alarmRef/alarmRef.page';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { Observable } from 'rxjs/Observable';
+
+
+
 
 
 @Component({
@@ -11,20 +16,29 @@ import { AlarmPage } from '../alarm/alarm.page';
 export class HomePage {
 
   state:Boolean=true;
-  stateText:string='ON State';
+  stateText:String='ON State';
+  alarmRef:Observable<any>;
+  alarmvalue:Number;
 
-  constructor(public navctrl:NavController) {}
+  constructor(public navctrl:NavController,private afdb:AngularFireDatabase) {
+
+    this.alarmRef=this.afdb.object('Alarm').valueChanges()
+    this.alarmRef.subscribe(x => this.alarmvalue=x);
+    
+  }
 
   toggleState(){
 
     if(this.state){
       this.stateText='ON State'
-      console.log(1,"on")
+      this.alarmvalue=1  
+      
     }else{
       this.stateText='OFF State'
+      this.alarmvalue=0
       console.log(0,"off")
     }
-    
+
     this.state=!this.state
     
   }
