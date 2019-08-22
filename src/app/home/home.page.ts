@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import {NavController } from '@ionic/angular';
-import { alarmRefPage } from '../alarmRef/alarmRef.page';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Observable } from 'rxjs/Observable';
+import { observable } from 'rxjs';
+
 
 
 
@@ -31,11 +32,11 @@ export class HomePage {
 
     if(this.state){
       this.stateText='ON State'
-      this.alarmvalue=1  
+      this.afdb.object('Alarm').set(1)  
       
     }else{
       this.stateText='OFF State'
-      this.alarmvalue=0
+      this.afdb.object('Alarm').set(0)  
       console.log(0,"off")
     }
 
