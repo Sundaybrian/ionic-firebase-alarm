@@ -18,7 +18,8 @@ import { AlarmPage } from './alarm/alarm.page';
 @NgModule({
   declarations: [AppComponent,AlarmPage],
   entryComponents: [AlarmPage],
-  imports: [BrowserModule, 
+  imports: [
+      BrowserModule, 
       IonicModule.forRoot(), 
       AppRoutingModule,
       AngularFireModule.initializeApp(FIREBASE_CREDENTIALS),

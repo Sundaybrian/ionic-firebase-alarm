@@ -2,13 +2,12 @@
 
 export const FIREBASE_CREDENTIALS={
 
-    apiKey: "AIzaSyBsnXYh1eftodsJs3PvdO1t_t9d2KjEbqo",
-    authDomain: "fir-weblearn-b660f.firebaseapp.com",
-    databaseURL: "https://fir-weblearn-b660f.firebaseio.com",
-    projectId: "fir-weblearn-b660f",
-    storageBucket: "fir-weblearn-b660f.appspot.com",
-    messagingSenderId: "654263767848",
-    appId: "1:654263767848:web:402c7dbcb6243f40"
-
+    a   apiKey: "AIzaSyD7v9NxUZ9sW-Q1NqhTUw3kCRVo33raF4Q",
+        authDomain: "betspack-5b8cc.firebaseapp.com",
+        databaseURL: "https://betspack-5b8cc.firebaseio.com",
+        projectId: "betspack-5b8cc",
+        storageBucket: "betspack-5b8cc.appspot.com",
+        messagingSenderId: "221380958756",
+        appId: "1:221380958756:web:d807e31582db3248"
 
 }
