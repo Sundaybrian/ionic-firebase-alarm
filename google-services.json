@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "221380958756",
+    "firebase_url": "https://betspack-5b8cc.firebaseio.com",
+    "project_id": "betspack-5b8cc",
+    "storage_bucket": "betspack-5b8cc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221380958756:android:93e637cb036fe187",
+        "android_client_info": {
+          "package_name": "com.bets.spack"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "221380958756-re6fshekjldtgb6afu3o2s1v91lqrc51.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDfbIzWz07CkdDpVBzL7r_UH6afqHxrMA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "221380958756-re6fshekjldtgb6afu3o2s1v91lqrc51.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221380958756:android:12c09838f81bdc8a",
+        "android_client_info": {
+          "package_name": "com.firebase.alarm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "221380958756-re6fshekjldtgb6afu3o2s1v91lqrc51.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDfbIzWz07CkdDpVBzL7r_UH6afqHxrMA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "221380958756-re6fshekjldtgb6afu3o2s1v91lqrc51.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

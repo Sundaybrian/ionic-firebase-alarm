@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import {NavController } from '@ionic/angular';
 import { AngularFireDatabase } from '@angular/fire/database';
-import { Observable } from 'rxjs/Observable';
-import { observable } from 'rxjs';
+import {  Observable } from 'rxjs';
+
 
 
 
