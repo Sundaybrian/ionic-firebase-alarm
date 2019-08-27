@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
-import {NavController } from '@ionic/angular';
+import {NavController, Platform } from '@ionic/angular';
 import { AngularFireDatabase } from '@angular/fire/database';
 import {  Observable } from 'rxjs';
-
-
-
-
-
+import { FCM } from '@ionic-native/fcm/ngx';
 
 
 @Component({
@@ -21,10 +17,32 @@ export class HomePage {
   alarmRef:Observable<any>;
   alarmvalue:Number;
 
-  constructor(public navctrl:NavController,private afdb:AngularFireDatabase) {
+  constructor(public navctrl:NavController,
+              private afdb:AngularFireDatabase,
+              private fcm:FCM,
+              public plt:Platform
+    ) {
 
     this.alarmRef=this.afdb.object('Alarm').valueChanges()
     this.alarmRef.subscribe(x => this.alarmvalue=x);
+
+    // code fcm to run  when device is reay
+    this.plt.ready().then(()=>{
+      this.fcm.onNotification().subscribe(data=>{
+        if(data.wasTapped){
+          console.log('Receive in background')
+        }else{
+          console.log('Received in foreground')
+        }
+
+      })
+
+    });
+
+    this.fcm.onTokenRefresh().subscribe(token=>{
+      // backend.registerToken()
+    })
+
     
   }
 
