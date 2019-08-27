@@ -14,6 +14,9 @@ import { AngularFireDatabaseModule} from '@angular/fire/database';
 import { FIREBASE_CREDENTIALS } from './firebase.credentials';
 import { AlarmPage } from './alarm/alarm.page';
 
+// importing fcm
+import { FCM } from '@ionic-native/fcm/ngx';
+
 
 @NgModule({
   declarations: [AppComponent,AlarmPage],
@@ -28,6 +31,7 @@ import { AlarmPage } from './alarm/alarm.page';
   providers: [
     StatusBar,
     SplashScreen,
+    FCM,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
