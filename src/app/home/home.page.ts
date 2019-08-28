@@ -35,21 +35,21 @@ export class HomePage {
 
 
     // code fcm to run  when device is reay
-    this.plt.ready().then(()=>{
-      this.fcm.onNotification().subscribe(data=>{
-        if(data.wasTapped){
-          console.log('Receive in background')
-        }else{
-          console.log('Received in foreground')
-        }
+    // this.plt.ready().then(()=>{
+    //   this.fcm.onNotification().subscribe(data=>{
+    //     if(data.wasTapped){
+    //       console.log('Receive in background')
+    //     }else{
+    //       console.log('Received in foreground')
+    //     }
 
-      })
+    //   })
 
-    });
+    // });
 
-    this.fcm.onTokenRefresh().subscribe(token=>{
-      // backend.registerToken()
-    })
+    // this.fcm.onTokenRefresh().subscribe(token=>{
+    //   // backend.registerToken()
+    // })
 
     
   }

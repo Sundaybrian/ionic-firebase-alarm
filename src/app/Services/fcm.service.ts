@@ -36,6 +36,8 @@ export class FcmService {
       userId:'testUserId'
     }
 
+    return devicesRef.child(token).set(data)
+
   }
 
   onNotifications(){
