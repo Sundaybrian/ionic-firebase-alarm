@@ -13,7 +13,7 @@ import { FCM } from '@ionic-native/fcm/ngx';
 export class HomePage {
 
   state:Boolean=true;
-  stateText:String='ON State';
+  stateText:String;
   alarmRef:Observable<any>;
   alarmvalue:Number;
 
@@ -24,7 +24,15 @@ export class HomePage {
     ) {
 
     this.alarmRef=this.afdb.object('Alarm').valueChanges()
-    this.alarmRef.subscribe(x => this.alarmvalue=x);
+    this.alarmRef.subscribe(x => {
+      this.alarmvalue=x
+      if(this.alarmvalue==1){
+        this.stateText='ON State'
+      }else{
+        this.stateText='OFF State'
+      }
+    });
+
 
     // code fcm to run  when device is reay
     this.plt.ready().then(()=>{
@@ -48,17 +56,17 @@ export class HomePage {
 
   toggleState(){
 
-    if(this.state){
-      this.stateText='ON State'
-      this.afdb.object('Alarm').set(1)  
-      
-    }else{
+    if(this.alarmvalue==1){
       this.stateText='OFF State'
       this.afdb.object('Alarm').set(0)  
+      
+    }else{
+      this.stateText='ON State'
+      this.afdb.object('Alarm').set(1)  
       console.log(0,"off")
     }
 
-    this.state=!this.state
+  
     
   }
 
