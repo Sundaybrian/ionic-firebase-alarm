@@ -42,7 +42,7 @@ export class AppComponent {
     this.fcm.getToken();
     this.fcm.onNotifications().subscribe(
       msg=>{
-        if (this.platform.is('android')){
+        if (msg.wasTapped){
           this.presentToast(msg.wasTapped);
         }else{
           this.presentToast(msg.body);
