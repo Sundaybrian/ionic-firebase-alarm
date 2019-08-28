@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, ToastController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AlarmPage } from './alarm/alarm.page';
+import { FcmService } from './Services/fcm.service';
+
+
 
 
 @Component({
@@ -16,9 +19,22 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private fcm:FcmService,
+    public toastcontroller:ToastController
   ) {
     this.initializeApp();
+  }
+
+  // adding a toast
+  private async presentToast(message){
+    const toast=await this.toastcontroller.create({
+      message,
+      duration:3000
+
+    })
+
+    toast.present();
   }
 
   initializeApp() {
