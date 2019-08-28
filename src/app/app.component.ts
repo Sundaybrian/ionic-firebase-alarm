@@ -37,6 +37,20 @@ export class AppComponent {
     toast.present();
   }
 
+  //notifications setup
+  private notificationsSetup(){
+    this.fcm.getToken();
+    this.fcm.onNotifications().subscribe(
+      msg=>{
+        if (this.platform.is('android')){
+          this.presentToast(msg.wasTapped);
+        }else{
+          this.presentToast(msg.body);
+        }
+      }
+    );
+  }
+
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
