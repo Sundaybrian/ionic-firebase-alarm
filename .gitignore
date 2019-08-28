@@ -34,4 +34,4 @@ $RECYCLE.BIN/
 Thumbs.db
 UserInterfaceState.xcuserstate
 
-FireBaseAlarm/src/app/firebase.credentials.ts
+src/app/firebase.credentials.ts
