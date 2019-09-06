@@ -10,6 +10,7 @@ import { FCM } from '@ionic-native/fcm/ngx';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
+
 export class HomePage {
 
   state:Boolean=true;
