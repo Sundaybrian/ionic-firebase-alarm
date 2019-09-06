@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule} from '@angular/fire/database';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 import { FIREBASE_CREDENTIALS } from './firebase.credentials';
 import { AlarmPage } from './alarm/alarm.page';
 
@@ -26,7 +27,8 @@ import { FCM } from '@ionic-native/fcm/ngx';
       IonicModule.forRoot(), 
       AppRoutingModule,
       AngularFireModule.initializeApp(FIREBASE_CREDENTIALS),
-      AngularFireDatabaseModule
+      AngularFireDatabaseModule,
+      AngularFireAuthModule
   ],
   providers: [
     StatusBar,
