@@ -17,6 +17,7 @@ export class HomePage {
   stateText:String;
   alarmRef:Observable<any>;
   alarmvalue:Number;
+  username:string;
 
   constructor(public navctrl:NavController,
               private afdb:AngularFireDatabase,
