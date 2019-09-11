@@ -16,6 +16,7 @@ export class FcmService {
               private afdb:AngularFireDatabase,
               private platform:Platform) { }
 
+              // get permission from the user
   async getToken(){
     let token;
 
@@ -26,6 +27,7 @@ export class FcmService {
     this.saveToken(token)
   }  
   
+  // save token to firebase
   private saveToken(token){
     if(!token) return;
 
@@ -40,6 +42,7 @@ export class FcmService {
 
   }
 
+  // listen to incoming fcm messages
   onNotifications(){
     return this.fcm.onNotification()
   }

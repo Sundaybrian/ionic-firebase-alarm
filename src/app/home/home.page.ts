@@ -3,6 +3,11 @@ import {NavController, Platform } from '@ionic/angular';
 import { AngularFireDatabase } from '@angular/fire/database';
 import {  Observable } from 'rxjs';
 import { FCM } from '@ionic-native/fcm/ngx';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { auth } from 'firebase/app';
+import { Router } from '@angular/router';
+
+
 
 
 @Component({
@@ -22,7 +27,9 @@ export class HomePage {
   constructor(public navctrl:NavController,
               private afdb:AngularFireDatabase,
               private fcm:FCM,
-              public plt:Platform
+              public plt:Platform,
+              public afAuth:AngularFireAuth,
+              public route:Router
     ) {
 
     this.alarmRef=this.afdb.object('Alarm').valueChanges()
@@ -67,9 +74,13 @@ export class HomePage {
       this.afdb.object('Alarm').set(1)  
       console.log(0,"off")
     }
-
-  
     
+  }
+
+  logout(){
+    this.afAuth.auth.signOut();
+    this.route.navigate(['/login'])
+
   }
 
   
