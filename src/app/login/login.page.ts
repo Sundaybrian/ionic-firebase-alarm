@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app'
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
+
 
 
 
@@ -15,19 +16,36 @@ export class LoginPage implements OnInit {
 
   username:string=""
   password:string=""
+  showSpinner:boolean=false
 
 
-  constructor( public afAuth:AngularFireAuth,public route:Router,public alert:AlertController) { }
+  constructor( public afAuth:AngularFireAuth,public route:Router,public alert:AlertController,public loadingctrl:LoadingController) { }
 
   ngOnInit() {
   }
 
   async login(){
+
     const {username,password }=this
     try {
       const res=await this.afAuth.auth.signInWithEmailAndPassword(username,password)
 
+      const loading = await this.loadingctrl.create({
+        message: 'Authenticating...',
+        duration: 2000,
+        spinner:'bubbles'
+      });
+
+       await loading.present();
+      const { role, data } = await loading.onDidDismiss();
+      
+      console.log('Loading dismissed!');
+      
       this.route.navigate(['/home'])
+      this.username=""
+      this.password=""
+      
+
     } catch (error) {
       console.dir(error)
       this.showAlert("Error",error.message)

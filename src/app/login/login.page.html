@@ -18,6 +18,10 @@
 
   </ion-list>
 
+
+<!-- Bubbles -->
+<ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
+
   <ion-button fill="solid" color="primary" expand="block" (click)="login()">Login</ion-button>
   <p>Need an account? <a [routerLink]="'/register'">Register</a></p>
 </ion-content>

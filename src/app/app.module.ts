@@ -17,10 +17,11 @@ import { AlarmPage } from './alarm/alarm.page';
 
 // importing fcm
 import { FCM } from '@ionic-native/fcm/ngx';
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 
 
 @NgModule({
-  declarations: [AppComponent,AlarmPage],
+  declarations: [AppComponent,AlarmPage,LoadingSpinnerComponent],
   entryComponents: [AlarmPage],
   imports: [
       BrowserModule, 
