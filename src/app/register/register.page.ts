@@ -3,6 +3,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app'
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { AngularFireDatabase } from '@angular/fire/database';
+
 
 
 
@@ -17,7 +19,12 @@ export class RegisterPage implements OnInit {
   password:string=""
   cpassword:string=""
 
-  constructor(public afAuth:AngularFireAuth,public alert:AlertController,public route:Router) { }
+  constructor(
+            public afAuth:AngularFireAuth,
+            public alert:AlertController,
+            public route:Router,
+            public afdb:AngularFireDatabase
+    ) { }
 
   ngOnInit() {
   }
@@ -25,6 +32,7 @@ export class RegisterPage implements OnInit {
 
   async register(){
     const{ username,password,cpassword }=this
+
     if(password !==cpassword){
       this.showAlert("Error","Passwords dont match")
       return console.error("Passwords dont match")
@@ -32,11 +40,23 @@ export class RegisterPage implements OnInit {
 
 
     try {
+
       const res= await this.afAuth.auth.createUserWithEmailAndPassword(username,password)
+
+      const userAlarmRef=this.afdb.database.ref('UserAlarms')
+
+      const userAlarmData={
+        username,
+        userId:this.afAuth.auth.currentUser.uid,
+        Alarm:0
+        
+      }
+
+      userAlarmRef.child(userAlarmData.userId).set(userAlarmData)
+
       this.showAlert("Succes","Welcome Aboard")
       this.route.navigate(['/login'])
-
-      
+  
     } catch (error) {
       console.dir(error) 
       this.showAlert("Error",error.message)
@@ -54,4 +74,6 @@ export class RegisterPage implements OnInit {
 
     await alert.present()
   }
+
+
 }

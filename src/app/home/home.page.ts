@@ -22,7 +22,7 @@ export class HomePage {
   stateText:String;
   alarmRef:Observable<any>;
   alarmvalue:Number;
-  username:string;
+  // username:Observable<any>=this.afAuth.user;
 
   constructor(public navctrl:NavController,
               private afdb:AngularFireDatabase,
@@ -41,6 +41,9 @@ export class HomePage {
         this.stateText='OFF State'
       }
     });
+
+
+    console.log(this.afAuth.auth.currentUser.uid,"useeeeeeeeeeeeeeeeeeeeeeeer")
 
 
     // code fcm to run  when device is reay

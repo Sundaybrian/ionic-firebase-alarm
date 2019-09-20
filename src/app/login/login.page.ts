@@ -19,7 +19,13 @@ export class LoginPage implements OnInit {
   showSpinner:boolean=false
 
 
-  constructor( public afAuth:AngularFireAuth,public route:Router,public alert:AlertController,public loadingctrl:LoadingController) { }
+  constructor( 
+              public afAuth:AngularFireAuth,
+              public route:Router,
+              public alert:AlertController,
+              public loadingctrl:LoadingController
+              ) { }
+
 
   ngOnInit() {
   }

@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>
-      Alarm
+    <ion-title  *ngIf="(afAuth.user | async )as user;">
+        {{user.email}}
     </ion-title>
 
     <ion-buttons (click)='logout()' slot="end">

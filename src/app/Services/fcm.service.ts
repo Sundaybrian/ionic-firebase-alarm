@@ -4,6 +4,8 @@ import {Platform } from '@ionic/angular';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { FCM } from '@ionic-native/fcm/ngx';
 import {  Observable } from 'rxjs';
+import { AngularFireAuth } from '@angular/fire/auth';
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,8 @@ export class FcmService {
 
   constructor(private fcm:FCM,
               private afdb:AngularFireDatabase,
-              private platform:Platform) { }
+              private platform:Platform,
+              public afAuth:AngularFireAuth) { }
 
               // get permission from the user
   async getToken(){
@@ -35,7 +38,7 @@ export class FcmService {
 
     const data={
       token,
-      userId:'testUserId'
+      userId:this.afAuth.auth.currentUser
     }
 
     return devicesRef.child(token).set(data)
