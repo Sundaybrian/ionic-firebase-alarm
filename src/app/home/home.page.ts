@@ -22,9 +22,12 @@ export class HomePage {
   stateText:String;
   alarmRef:Observable<any>;
   alarmvalue:Number;
+  userID:any;
   // username:Observable<any>=this.afAuth.user;
 
-  constructor(public navctrl:NavController,
+  constructor(
+
+              public navctrl:NavController,
               private afdb:AngularFireDatabase,
               private fcm:FCM,
               public plt:Platform,
@@ -32,7 +35,40 @@ export class HomePage {
               public route:Router
     ) {
 
-    this.alarmRef=this.afdb.object('Alarm').valueChanges()
+      this.getAlarm()
+
+
+    
+  }
+
+  toggleState(){
+
+    if(this.alarmvalue==1){
+      this.stateText='OFF State' 
+      this.afdb.object('UserAlarms/'+this.userID+'/Alarm').set(0)
+      
+    }else{
+      this.stateText='ON State' 
+      this.afdb.object('UserAlarms/'+this.userID+'/Alarm').set(1)
+      
+    }
+    
+  }
+
+
+
+  logout(){
+    this.afAuth.auth.signOut();
+    this.route.navigate(['/login'])
+
+  }
+
+  getAlarm(){
+
+    this.userID=this.afAuth.auth.currentUser.uid  
+    
+    this.alarmRef=this.afdb.object('UserAlarms/'+this.userID+'/Alarm').valueChanges()
+
     this.alarmRef.subscribe(x => {
       this.alarmvalue=x
       if(this.alarmvalue==1){
@@ -41,48 +77,6 @@ export class HomePage {
         this.stateText='OFF State'
       }
     });
-
-
-    console.log(this.afAuth.auth.currentUser.uid,"useeeeeeeeeeeeeeeeeeeeeeeer")
-
-
-    // code fcm to run  when device is reay
-    // this.plt.ready().then(()=>{
-    //   this.fcm.onNotification().subscribe(data=>{
-    //     if(data.wasTapped){
-    //       console.log('Receive in background')
-    //     }else{
-    //       console.log('Received in foreground')
-    //     }
-
-    //   })
-
-    // });
-
-    // this.fcm.onTokenRefresh().subscribe(token=>{
-    //   // backend.registerToken()
-    // })
-
-    
-  }
-
-  toggleState(){
-
-    if(this.alarmvalue==1){
-      this.stateText='OFF State'
-      this.afdb.object('Alarm').set(0)  
-      
-    }else{
-      this.stateText='ON State'
-      this.afdb.object('Alarm').set(1)  
-      console.log(0,"off")
-    }
-    
-  }
-
-  logout(){
-    this.afAuth.auth.signOut();
-    this.route.navigate(['/login'])
 
   }
 
