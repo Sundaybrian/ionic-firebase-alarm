@@ -23,7 +23,7 @@ export class HomePage {
   alarmRef:Observable<any>;
   alarmvalue:Number;
   userID:any;
-  // username:Observable<any>=this.afAuth.user;
+ 
 
   constructor(
 

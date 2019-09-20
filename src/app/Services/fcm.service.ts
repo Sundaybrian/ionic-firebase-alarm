@@ -14,12 +14,14 @@ import { AngularFireAuth } from '@angular/fire/auth';
 
 export class FcmService {
 
-  constructor(private fcm:FCM,
+  constructor(
+              private fcm:FCM,
               private afdb:AngularFireDatabase,
               private platform:Platform,
-              public afAuth:AngularFireAuth) { }
+              public afAuth:AngularFireAuth
+              ) { }
 
-              // get permission from the user
+  // get permission from the user
   async getToken(){
     let token;
 
@@ -38,7 +40,8 @@ export class FcmService {
 
     const data={
       token,
-      userId:this.afAuth.auth.currentUser
+      userId:this.afAuth.auth.currentUser.uid
+
     }
 
     return devicesRef.child(token).set(data)

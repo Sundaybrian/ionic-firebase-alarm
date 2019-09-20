@@ -20,42 +20,9 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private fcm:FcmService,
-    public toastcontroller:ToastController
   ) {
-    this.initializeApp();
+    
   }
 
-  // adding a toast
-  private async presentToast(message){
-    const toast=await this.toastcontroller.create({
-      message,
-      duration:3000
 
-    })
-
-    toast.present();
-  }
-
-  //notifications setup
-  private notificationsSetup(){
-    this.fcm.getToken();
-    this.fcm.onNotifications().subscribe(
-      msg=>{
-        if (msg.wasTapped){
-          this.presentToast(msg.wasTapped);
-        }else{
-          this.presentToast(msg.body);
-        }
-      }
-    );
-  }
-
-  initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-      this.notificationsSetup()
-    });
-  }
 }
