@@ -1,31 +1,41 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+
 admin.initializeApp()
 
-exports.newAlarmNotification=functions.database.ref('Alarm').onWrite( async event=>{
+exports.newAlarmNotification=functions.database.ref('UserAlarms/{userId}').onWrite( async event=>{
 
-    // fetch value of the alarm
     const data=event.after.val()
 
-    const utoken="fZqNjI3Z0Xc:APA91bFEOv8oerrggTevqR3u5BeUKNS_TI3PQTEtx9DaX7f2lMPj_6QbHOfedsLUmYtkzJM9hXKnqaSKy63mDft52ce87h3or5GeCv0vYH4u36YMYJ8Z6M-yMTPIDx3pLN4QTKdFzFnI"
+    //grab alarm value
+    const alarmValue=data.Alarm
 
-    //ref to the device tree for the user
-    const db=admin.database()
-    const devicesRef=db.ref('devices').equalTo('testUserId','testUserId')
-
-    //fetch users tokens and send notifications
-    // const devices= await devicesRef.
+    //grab user id
+    const userId=data.userId
 
     //Notification content
     const payload={
         notification:{
             title:'Alarm State Changed',
-            body:`Alarm is now ${data}`
+            body:`Alarm is now ${alarmValue}`
         }
     }
 
+    //ref to the device for the user
+    const db=admin.database()
+    let token:string='';
 
-    return admin.messaging().sendToDevice(utoken,payload)
+    db.ref(`devices/${userId}`).on('value',function(snap){
+
+        if(snap != null) {
+            token=snap.val()['token']
+        }
+
+
+      })
+
+
+    return admin.messaging().sendToDevice(token,payload)
 })
 
 

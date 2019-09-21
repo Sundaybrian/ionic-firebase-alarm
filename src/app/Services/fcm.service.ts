@@ -37,14 +37,16 @@ export class FcmService {
     if(!token) return;
 
     const devicesRef=this.afdb.database.ref('devices')
+    const userId=this.afAuth.auth.currentUser.uid
+
 
     const data={
+      userId,
       token,
-      userId:this.afAuth.auth.currentUser.uid
-
+      email:this.afAuth.auth.currentUser.email
     }
 
-    return devicesRef.child(token).set(data)
+    return devicesRef.child(userId).set(data)
 
   }
 

@@ -23,6 +23,8 @@ export class HomePage {
   alarmRef:Observable<any>;
   alarmvalue:Number;
   userID:any;
+
+  devicesRef:any;
  
 
   constructor(
@@ -36,6 +38,10 @@ export class HomePage {
     ) {
 
       this.getAlarm()
+
+     
+
+      
 
 
     
