@@ -11,10 +11,10 @@ import { Observable } from 'rxjs';
 })
 export class LogsPage implements OnInit {
 
-  myalarms=[]
+  myAlarms:any[]=[]
   userId:any;
   userAlarmRef;
-
+  // testAlarm:Observable<any[]>=[]
 
   constructor(private afdb:AngularFireDatabase,
               public afAuth:AngularFireAuth          
@@ -26,26 +26,44 @@ export class LogsPage implements OnInit {
   }
 
   getMyAlarms(){
+
     this.userId=this.afAuth.auth.currentUser.uid
-    this.userAlarmRef=this.afdb.database.ref('UserAlarmLogs/'+this.userId)
 
-    this.userAlarmRef.on('value',function(snap){
-      // snap.val() is an object with multiple objects
-      console.log(snap.val())
+    this.userAlarmRef=this.afdb.object('UserAlarmLogs/'+this.userId).valueChanges()
 
-      // so we loop each object
-      snap.forEach(childSnap => {
-        //grabbing each obj in snap
-        var val=childSnap.val()
+    // this.userAlarmRef.on('value',function(snap){
+    //   // snap.val() is an object with multiple objects
+    //   console.log(snap.val(),"snap.val")
 
-        console.log(val,'childsnap')
+    //   // so we loop each object
+    //   snap.forEach(childSnap => {
+    //     //grabbing each obj in snap
+    //     var val=childSnap.val()
 
-        // pushing each alarm date obj to myalarms array
-        this.myalarms.push(val)
+    //     console.log(val,'children')
 
-      });
+    //     // pushing each alarm date obj to myalarms array
+    //     localAlarms.push(childSnap.val())
+    //     console.log(localAlarms,"localalarams")
 
-    })
+    //   });
+
+    // })
+
+    this.userAlarmRef.subscribe(dates => {
+      for (const key in dates) {
+        if (dates.hasOwnProperty(key)) {
+          // const element = object[key];
+          console.log(dates[key],"geniussssssssssss");
+          this.myAlarms.push(dates[key])
+          
+        }
+      }
+    
+    });
+    
+
+
 
   }
 

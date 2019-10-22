@@ -9,14 +9,16 @@
     </ion-toolbar>
   </ion-header>
 
-<ion-content>
-  <ion-list>
+<ion-content >
+  <ion-list *ngFor="let alarm of myAlarms;let i=index">
       <ion-list-header>
-        Date:24=10-2019
+        {{alarm.key}}{{i}}
       </ion-list-header>
-      <ion-item>Terminator II</ion-item>
-      <ion-item>The Empire Strikes Back</ion-item>
-      <ion-item>Blade Runner</ion-item>
+      
+      <ion-item *ngFor="let item of alarm | keyvalue">
+          Time On:{{item.value}}
+      </ion-item>
+      
     </ion-list>
 
 </ion-content>
