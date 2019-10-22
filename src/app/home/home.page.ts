@@ -39,12 +39,6 @@ export class HomePage {
 
       this.getAlarm()
 
-     
-
-      
-
-
-    
   }
 
   toggleState(){
@@ -63,11 +57,11 @@ export class HomePage {
 
 
 
-  logout(){
-    this.afAuth.auth.signOut();
-    this.route.navigate(['/login'])
+  // logout(){
+  //   this.afAuth.auth.signOut();
+  //   this.route.navigate(['/login'])
 
-  }
+  // }
 
   getAlarm(){
 
