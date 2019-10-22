@@ -21,6 +21,7 @@ export class HomePage {
   state:Boolean=true;
   stateText:String;
   alarmRef:Observable<any>;
+  alarmLogRef:any;
   alarmvalue:Number;
   userID:any;
 
@@ -50,18 +51,12 @@ export class HomePage {
     }else{
       this.stateText='ON State' 
       this.afdb.object('UserAlarms/'+this.userID+'/Alarm').set(1)
+      this.pushAlarm()
       
     }
     
   }
 
-
-
-  // logout(){
-  //   this.afAuth.auth.signOut();
-  //   this.route.navigate(['/login'])
-
-  // }
 
   getAlarm(){
 
@@ -78,6 +73,17 @@ export class HomePage {
       }
     });
 
+  }
+
+  pushAlarm(){
+    var d=new Date()
+    var today=d.getDate()+'-'+(d.getMonth()+1)+'-'+d.getFullYear()
+    var time=d.getHours()+':'+d.getMinutes()+':'+d.getSeconds()
+    var user=this.afAuth.auth.currentUser.uid
+
+    this.afdb.database.ref('UserAlarmLogs/'+user).child(today).push(time)
+    
+    console.log('pushed alarm  1',today,time)
   }
 
   
