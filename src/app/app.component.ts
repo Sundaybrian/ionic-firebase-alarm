@@ -16,13 +16,36 @@ import { FcmService } from './Services/fcm.service';
 })
 export class AppComponent {
 
+  navigate:any
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
   ) {
-    
+    this.sideMenu()
   }
 
+
+  sideMenu(){
+    this.navigate=[
+      {
+        title:"Home",
+        url:'/home',
+        icon:'home'
+      },
+      {
+        title:'Logs',
+        url:'/logs',
+        icon:'alarm'
+      }
+      ,
+      {
+        title:'Logout',
+        url:'/logout',
+        icon:'log-out'
+      }
+    ]
+  }
 
 }
