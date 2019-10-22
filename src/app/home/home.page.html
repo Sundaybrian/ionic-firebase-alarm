@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar color="primary">
     <ion-title  *ngIf="(afAuth.user | async )as user;">
         {{user.email}}
@@ -12,7 +12,18 @@
     
    
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
+
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+      <ion-title>
+        Home
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
 
 <ion-content>
   <div class="ion-padding">
