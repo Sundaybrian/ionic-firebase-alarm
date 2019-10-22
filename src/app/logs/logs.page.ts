@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 export class LogsPage implements OnInit {
 
   myAlarms:any[]=[]
+  myAlarmDates:any[]=[]
   userId:any;
   userAlarmRef;
   // testAlarm:Observable<any[]>=[]
@@ -54,7 +55,9 @@ export class LogsPage implements OnInit {
       for (const key in dates) {
         if (dates.hasOwnProperty(key)) {
           // const element = object[key];
+         
           console.log(dates[key],"geniussssssssssss");
+          this.myAlarmDates.push(key)
           this.myAlarms.push(dates[key])
           
         }

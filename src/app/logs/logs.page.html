@@ -12,7 +12,7 @@
 <ion-content >
   <ion-list *ngFor="let alarm of myAlarms;let i=index">
       <ion-list-header>
-        {{alarm.key}}{{i}}
+        Date:{{myAlarmDates[i]}}
       </ion-list-header>
       
       <ion-item *ngFor="let item of alarm | keyvalue">
