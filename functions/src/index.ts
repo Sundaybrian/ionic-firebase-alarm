@@ -17,7 +17,8 @@ exports.newAlarmNotification=functions.database.ref('UserAlarms/{userId}').onWri
     const payload={
         notification:{
             title:'Alarm State Changed',
-            body:`Alarm is now ${alarmValue}`
+            body:`Alarm is now ${alarmValue}`,
+
         }
     }
 
