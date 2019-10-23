@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app'
 import { Router } from '@angular/router';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController ,Platform,ToastController} from '@ionic/angular';
+import { FcmService } from '../Services/fcm.service';
+
 
 
 
@@ -23,7 +25,10 @@ export class LoginPage implements OnInit {
               public afAuth:AngularFireAuth,
               public route:Router,
               public alert:AlertController,
-              public loadingctrl:LoadingController
+              public loadingctrl:LoadingController,
+              private platform:Platform,
+              public toastcontroller:ToastController,
+              public fcm:FcmService
               ) { }
 
 
@@ -47,6 +52,8 @@ export class LoginPage implements OnInit {
       
       console.log('Loading dismissed!');
       
+      this.initializeApp()
+
       this.route.navigate(['/home'])
       this.username=""
       this.password=""
@@ -70,6 +77,40 @@ export class LoginPage implements OnInit {
     })
 
     await alert.present()
+  }
+
+  // adding a toast
+  private async presentToast(message){
+    const toast=await this.toastcontroller.create({
+      message,
+      duration:3000
+
+    })
+
+    toast.present();
+  }
+
+
+  initializeApp() {
+    this.platform.ready().then(() => {
+      // this.statusBar.styleDefault();
+      // this.splashScreen.hide();
+      this.notificationsSetup()
+    });
+  }
+
+  //notifications setup
+  private notificationsSetup(){
+    this.fcm.getToken();
+    this.fcm.onNotifications().subscribe(
+      msg=>{
+        if (msg.wasTapped){
+          this.presentToast(msg.wasTapped);
+        }else{
+          this.presentToast(msg.body);
+        }
+      }
+    );
   }
 
 

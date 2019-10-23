@@ -23,9 +23,7 @@ export class RegisterPage implements OnInit {
             public alert:AlertController,
             public route:Router,
             public afdb:AngularFireDatabase,
-            public fcm:FcmService,
-            private platform:Platform,
-            public toastcontroller:ToastController
+            
     ) { 
     
     }
@@ -58,8 +56,6 @@ export class RegisterPage implements OnInit {
 
         userAlarmRef.child(userAlarmData.userId).set(userAlarmData)
 
-        this.initializeApp()
-
         this.showAlert("Succes","Welcome Aboard")
         this.route.navigate(['/login'])
     
@@ -81,39 +77,6 @@ export class RegisterPage implements OnInit {
     await alert.present()
   }
 
-    // adding a toast
-    private async presentToast(message){
-      const toast=await this.toastcontroller.create({
-        message,
-        duration:3000
-  
-      })
-  
-      toast.present();
-    }
-
-
-    initializeApp() {
-      this.platform.ready().then(() => {
-        // this.statusBar.styleDefault();
-        // this.splashScreen.hide();
-        this.notificationsSetup()
-      });
-    }
-  
-    //notifications setup
-    private notificationsSetup(){
-      this.fcm.getToken();
-      this.fcm.onNotifications().subscribe(
-        msg=>{
-          if (msg.wasTapped){
-            this.presentToast(msg.wasTapped);
-          }else{
-            this.presentToast(msg.body);
-          }
-        }
-      );
-    }
-
+    
 
 }
