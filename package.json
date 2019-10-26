@@ -30,6 +30,7 @@
     "cordova-plugin-fcm-with-dependecy-updated": "^3.0.0",
     "core-js": "^2.5.4",
     "firebase": "^6.4.0",
+    "ng-circle-progress": "^1.5.1",
     "rxjs": "~6.5.1",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
