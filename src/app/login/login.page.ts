@@ -6,9 +6,6 @@ import { AlertController, LoadingController ,Platform,ToastController} from '@io
 import { FcmService } from '../Services/fcm.service';
 
 
-
-
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -23,7 +20,7 @@ export class LoginPage implements OnInit {
 
   constructor( 
               public afAuth:AngularFireAuth,
-              public route:Router,
+              public router:Router,
               public alert:AlertController,
               public loadingctrl:LoadingController,
               private platform:Platform,
@@ -52,20 +49,17 @@ export class LoginPage implements OnInit {
       
       console.log('Loading dismissed!');
       
-      this.initializeApp()
+      // this.initializeApp()
 
-      this.route.navigate(['/home'])
-      this.username=""
-      this.password=""
+      this.router.navigate(['/home']);
+      this.username="";
+      this.password="";
       
 
     } catch (error) {
       console.dir(error)
       this.showAlert("Error",error.message)
 
-      // if(error.code==='auth/user-not-found'){
-      //   console.log("User not found")
-      // }
     }
   }
 
@@ -79,18 +73,7 @@ export class LoginPage implements OnInit {
     await alert.present()
   }
 
-  // adding a toast
-  private async presentToast(message){
-    const toast=await this.toastcontroller.create({
-      message,
-      duration:3000
-
-    })
-
-    toast.present();
-  }
-
-
+  
   initializeApp() {
     this.platform.ready().then(() => {
       // this.statusBar.styleDefault();
@@ -98,7 +81,7 @@ export class LoginPage implements OnInit {
       this.notificationsSetup()
     });
   }
-
+  
   //notifications setup
   private notificationsSetup(){
     this.fcm.getToken();
@@ -110,8 +93,18 @@ export class LoginPage implements OnInit {
           this.presentToast(msg.body);
         }
       }
-    );
-  }
-
+      );
+    }
+    
+    // adding a toast
+    private async presentToast(message){
+      const toast=await this.toastcontroller.create({
+        message,
+        duration:3000
+  
+      })
+  
+      toast.present();
+    }
 
 }

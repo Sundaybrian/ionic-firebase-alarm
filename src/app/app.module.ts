@@ -19,11 +19,6 @@ import { AlarmPage } from './alarm/alarm.page';
 import { FCM } from '@ionic-native/fcm/ngx';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 
-// Import ng-circle-progress
-import{ NgCircleProgressModule } from 'ng-circle-progress';
-
-
-
 @NgModule({
   declarations: [AppComponent,AlarmPage,LoadingSpinnerComponent],
   entryComponents: [AlarmPage],
@@ -34,18 +29,7 @@ import{ NgCircleProgressModule } from 'ng-circle-progress';
       AngularFireModule.initializeApp(FIREBASE_CREDENTIALS),
       AngularFireDatabaseModule,
       AngularFireAuthModule,
-      NgCircleProgressModule.forRoot({
-        //set defaults
-        radius:100,
-        outerStrokeWidth:16,
-        innerStrokeWidth:8,
-        outerStrokeColor: "#78C000",
-        innerStrokeColor: "#C7E596",
-        animationDuration:300,
-        animation:false,
-        responsive:true,
-        renderOnClick:false
-      })
+      
   ],
   providers: [
     StatusBar,

@@ -6,6 +6,9 @@ import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
 
+
+import { NgCircleProgressModule } from 'ng-circle-progress';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -16,7 +19,20 @@ import { HomePage } from './home.page';
         path: '',
         component: HomePage
       }
-    ])
+      
+    ]),
+    NgCircleProgressModule.forRoot({
+      //set defaults
+      radius:100,
+      outerStrokeWidth:16,
+      innerStrokeWidth:8,
+      outerStrokeColor: "#78C000",
+      innerStrokeColor: "#C7E596",
+      animationDuration:300,
+      animation:false,
+      responsive:true,
+      renderOnClick:false
+    })
   ],
   declarations: [HomePage]
 })
