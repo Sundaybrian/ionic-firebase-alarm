@@ -109,6 +109,25 @@ export class HomePage {
     return s;
   }
 
+  stopTime(){
+    clearInterval(this.timer);
+    clearInterval(this.countDownTimer);
+    this.timer=false;
+    this.percent=0;
+    this.progress=0;
+    this.elapsed={
+      'h':"00",
+      'm':"00",
+      's':"00"
+    };
+    this.timeLeft={
+      h:'00',
+      m:'00',
+      s:'00'
+    };
+    this.remainingTime=`${this.timeLeft.m}:${this.timeLeft.s}`;
+  }
+
   toggleState(){
 
     if(this.alarmvalue==1){
