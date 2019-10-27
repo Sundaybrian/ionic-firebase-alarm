@@ -23,26 +23,96 @@ export class HomePage {
   userID:any;
 
   devicesRef:any;
-  
+
   // circle progress
-  percent:number=0;
+  percent:number=50;
+  progress:any=0;
   radius:number=100;
   fullTime='00:03:30';
+  timer:any=false;
+  
+  minutes:number=3;
+  seconds:any=30;
 
- 
+  elapsed:any={
+    'h':"00",
+    'm':"00",
+    's':"00"
+  };
+
+  overalTimer:any=false;
 
   constructor(
-
-              public navctrl:NavController,
-              private afdb:AngularFireDatabase,
-              private fcm:FCM,
-              public plt:Platform,
-              public afAuth:AngularFireAuth,
-              public route:Router
-    ) {
+    public navctrl:NavController,
+    private afdb:AngularFireDatabase,
+    private fcm:FCM,
+    public plt:Platform,
+    public afAuth:AngularFireAuth,
+    public route:Router
+  ) {
 
       this.getAlarm()
 
+  }
+
+  startTime(){
+    console.info("clicked svg")
+
+    if(this.timer){
+      clearInterval(this.timer);
+    }
+
+    // if(!this.overalTimer){
+    //   // if overall timer is set to false run it
+    //   this.progressTimer();
+    // }
+
+    this.timer=false;
+    this.percent=0;
+    this.progress=0;
+
+    let timeSplit=this.fullTime.split(':');
+    this.minutes=timeSplit[1];
+    this.seconds=timeSplit[2];
+
+    let totalSeconds=Math.floor(this.minutes * 60) + parseInt(this.seconds);
+    
+    this.timer=setInterval(()=>{
+      if(this.percent == this.radius){
+        clearInterval(this.timer);
+      }
+      
+      this.percent=Math.floor((this.progress/totalSeconds)*100);
+        
+      console.log("here");
+      this.progress++;
+    }, 1000)
+    
+  }
+
+  progressTimer(){
+    let countDownDate=new Date();
+
+    this.overalTimer=setInterval(function(){
+      let now=new Date().getTime();
+      let distance=now - countDownDate.getTime();
+
+      // this.elapsed.h=Math.floor((distance % (1000 * 60 * 60 *24)) / (1000 * 3600));
+      // this.elapsed.m=Math.floor(( distance % (1000 * 60 * 60)) / (1000 * 60));
+      // this.elapsed.s=Math.floor(( distance % (1000 *60 )) / 1000);
+
+      // this.elapsed.h=this.pad(this.elapsed.h,2);
+      // this.elapsed.m=this.pad(this.elapsed.m,2);
+      // this.elapsed.s=this.pad(this.elapsed.s,2);
+
+ 
+    })
+  }
+
+  pad(num,size){
+    let s=num + "";
+    while(s.length <size) s= "0" +s;
+    return s;
   }
 
   toggleState(){
