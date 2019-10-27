@@ -25,18 +25,25 @@
     </ion-toolbar>
   </ion-header>
 
-<ion-content>
-  <div class="ion-padding">
+<ion-content class="ion-padding">
+  <div>
     <p>Alarm:{{alarmvalue}}</p>
       <ion-button expand="block" (click)="toggleState()">{{stateText}}</ion-button>
   </div>
 
+  <ion-item color="dark">
+    <ion-label>Disable Alarm Duration</ion-label>
+    <ion-datetime display-format="mm:ss" placeholder="Tap here" [(ngModel)]="fullTime"></ion-datetime>
+  </ion-item>
+
     <circle-progress
+    (click)="startTime()"
     [percent]="percent"
     [maxPercent]="100"
-    [radius]="100"
+    [radius]="radius"
     [showTitle]="false"
     [showSubtitle]="false"
+    [showUnits]="false"
     [outerStrokeWidth]="16"
     [outerStrokeColor]="'#8000FF'"
     [showZeroOuterStroke]="false"
