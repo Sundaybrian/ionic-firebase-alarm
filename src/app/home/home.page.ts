@@ -25,7 +25,7 @@ export class HomePage {
   devicesRef:any;
 
   // circle progress
-  percent:number=50;
+  percent:number=0;
   progress:any=0;
   radius:number=100;
   fullTime='00:03:30';
@@ -39,8 +39,6 @@ export class HomePage {
     'm':"00",
     's':"00"
   };
-
-  overalTimer:any=false;
 
   countDownTimer:any=false;
   timeLeft:any={
@@ -70,11 +68,6 @@ export class HomePage {
       clearInterval(this.timer);
       clearInterval(this.countDownTimer);
     }
-
-    // if(!this.overalTimer){
-    //   // if overall timer is set to false run it
-    //   this.progressTimer();
-    // }
 
     this.timer=false;
     this.percent=0;
@@ -109,28 +102,10 @@ export class HomePage {
     
   }
 
-  progressTimer(){
-    let countDownDate=new Date();
-
-    this.overalTimer=setInterval(function(){
-      let now=new Date().getTime();
-      let distance=now - countDownDate.getTime();
-
-      // this.elapsed.h=Math.floor((distance % (1000 * 60 * 60 *24)) / (1000 * 3600));
-      // this.elapsed.m=Math.floor(( distance % (1000 * 60 * 60)) / (1000 * 60));
-      // this.elapsed.s=Math.floor(( distance % (1000 *60 )) / 1000);
-
-      // this.elapsed.h=this.pad(this.elapsed.h,2);
-      // this.elapsed.m=this.pad(this.elapsed.m,2);
-      // this.elapsed.s=this.pad(this.elapsed.s,2);
-
- 
-    })
-  }
 
   pad(num,size){
     let s=num + "";
-    while(s.length <size) s= "0" +s;
+    while(s.length <size) s= "0"+s;
     return s;
   }
 
