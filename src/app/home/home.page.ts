@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 
 export class HomePage {
 
-  state:Boolean=true;
+  state:boolean=true;
   stateText:String;
   alarmRef:Observable<any>;
   alarmLogRef:any;
@@ -131,13 +131,15 @@ export class HomePage {
   toggleState(){
 
     if(this.alarmvalue==1){
-      this.stateText='OFF State' 
-      this.afdb.object('UserAlarms/'+this.userID+'/Alarm').set(0)
+      this.stateText="Turn Off";
+      this.afdb.object('UserAlarms/'+this.userID+'/Alarm').set(0);  
+      this.state=false;
       
     }else{
-      this.stateText='ON State' 
-      this.afdb.object('UserAlarms/'+this.userID+'/Alarm').set(1)
-      this.pushAlarm()
+      this.stateText="Turn On";
+      this.afdb.object('UserAlarms/'+this.userID+'/Alarm').set(1);
+      this.pushAlarm();
+      this.state=true;
       
     }
     
@@ -145,7 +147,6 @@ export class HomePage {
 
 
   getAlarm(){
-
     this.userID=this.afAuth.auth.currentUser.uid  
     
     this.alarmRef=this.afdb.object('UserAlarms/'+this.userID+'/Alarm').valueChanges()
@@ -153,9 +154,11 @@ export class HomePage {
     this.alarmRef.subscribe(x => {
       this.alarmvalue=x
       if(this.alarmvalue==1){
-        this.stateText='ON State'
+        this.stateText='Turn Off'
+        this.state=true;
       }else{
-        this.stateText='OFF State'
+        this.stateText='Turn On'
+        this.state=false;
       }
     });
 
