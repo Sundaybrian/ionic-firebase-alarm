@@ -132,6 +132,7 @@ export class HomePage {
 
     if(this.alarmvalue==1){
       this.stateText="Turn Off";
+      // need to inject a modal or action sheet for the user to actually decide to turn off or temporary disable the alarm
       this.afdb.object('UserAlarms/'+this.userID+'/Alarm').set(0);  
       this.state=false;
       
