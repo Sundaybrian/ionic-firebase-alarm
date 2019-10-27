@@ -32,13 +32,18 @@
   </div>
 
     <circle-progress
-    [percent]="85"
+    [percent]="percent"
+    [maxPercent]="100"
     [radius]="100"
+    [showTitle]="false"
+    [showSubtitle]="false"
     [outerStrokeWidth]="16"
-    [innerStrokeWidth]="8"
-    [outerStrokeColor]="'#78C000'"
-    [innerStrokeColor]="'#C7E596'"
-    [animation]="true"
-    [animationDuration]="300"
+    [outerStrokeColor]="'#8000FF'"
+    [showZeroOuterStroke]="false"
+    [backgroundStroke]="'#33003F'"
+    [backgroundStrokeWidth]="3"
+    [outerStrokeGradient]="true"
+    [outerStrokeGradientStopColor]="'#FF00CB'"
+    [showInnerStroke]="false"
   ></circle-progress>
 </ion-content>
