@@ -23,6 +23,12 @@ export class HomePage {
   userID:any;
 
   devicesRef:any;
+  
+  // circle progress
+  percent:number=0;
+  radius:number=100;
+  fullTime='00:03:30';
+
  
 
   constructor(
