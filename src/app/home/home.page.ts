@@ -31,7 +31,7 @@ export class HomePage {
   fullTime='00:03:30';
   timer:any=false;
   
-  minutes:number=3;
+  minutes:any=3;
   seconds:any=30;
 
   elapsed:any={
@@ -41,6 +41,14 @@ export class HomePage {
   };
 
   overalTimer:any=false;
+
+  countDownTimer:any=false;
+  timeLeft:any={
+    h:'00',
+    m:'00',
+    s:'00'
+  };
+  remainingTime=`${this.timeLeft.m}:${this.timeLeft.s}`;
 
   constructor(
     public navctrl:NavController,
@@ -60,6 +68,7 @@ export class HomePage {
 
     if(this.timer){
       clearInterval(this.timer);
+      clearInterval(this.countDownTimer);
     }
 
     // if(!this.overalTimer){
@@ -76,12 +85,22 @@ export class HomePage {
     this.seconds=timeSplit[2];
 
     let totalSeconds=Math.floor(this.minutes * 60) + parseInt(this.seconds);
+    let secondsLeft=totalSeconds;
+
+    this.countDownTimer=setInterval(()=>{
+      if(secondsLeft >=0){
+        this.timeLeft.m=Math.floor(secondsLeft/60);
+        this.timeLeft.s=secondsLeft-(60 * this.timeLeft.m);
+        this.remainingTime=`${this.pad(this.timeLeft.m,2)}:${this.pad(this.timeLeft.s,2)}`;
+        secondsLeft--;
+      }
+    },1000)
     
     this.timer=setInterval(()=>{
       if(this.percent == this.radius){
         clearInterval(this.timer);
       }
-      
+
       this.percent=Math.floor((this.progress/totalSeconds)*100);
         
       console.log("here");
