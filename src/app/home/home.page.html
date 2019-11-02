@@ -36,12 +36,12 @@
     <div class="off-buttons">
         <ion-grid>
             <ion-row>
-              <ion-col>
+              <ion-col *ngIf="!showTemporary">
                 <p>Alarm:{{alarmvalue}}</p>
-                <ion-button expand="block" (click)="toggleState()">Turn Off{{stateText}}</ion-button>
+                <ion-button expand="block" (click)="toggleState()">{{stateText}}</ion-button>
               </ion-col>
 
-              <ion-col>
+              <ion-col *ngIf="showTemporary">
                 <ion-item color="dark">
                     <ion-label>Temporary Disable</ion-label>
                     <ion-datetime display-format="mm:ss" placeholder="Tap here" [(ngModel)]="fullTime"></ion-datetime>
@@ -53,13 +53,11 @@
     </div>
    
     
-        <div class="circle-progress-container">
+        <div class="circle-progress-container" *ngIf="showTemporary">
             <circle-progress (click)="startTime()"
           [percent]="percent"
           [maxPercent]="100"
           [radius]="radius"
-          [showTitle]="true"
-          [title]="title"
           [showSubtitle]="true"
           [subtitle]="remainingTime"
           [subtitleFontSize]="40"
@@ -75,7 +73,7 @@
         ></circle-progress>
         </div>
     
-        <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="showTemporary">
           <ng-container *ngIf="timer == false; else running">
             <ion-fab-button (click)="startTime()">
               <ion-icon name="play"></ion-icon>
