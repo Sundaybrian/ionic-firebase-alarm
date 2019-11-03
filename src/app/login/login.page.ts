@@ -49,7 +49,7 @@ export class LoginPage implements OnInit {
 
       console.log('Loading dismissed!');
 
-      // this.initializeApp()
+      this.initializeApp();
 
       this.router.navigate(['/home']);
       this.username = '';
