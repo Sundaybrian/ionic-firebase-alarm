@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase/app'
+import { auth } from 'firebase/app';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController ,Platform,ToastController} from '@ionic/angular';
+import { AlertController, LoadingController , Platform, ToastController} from '@ionic/angular';
 import { FcmService } from '../Services/fcm.service';
 
 
@@ -13,97 +13,97 @@ import { FcmService } from '../Services/fcm.service';
 })
 export class LoginPage implements OnInit {
 
-  username:string=""
-  password:string=""
-  showSpinner:boolean=false
+  username = '';
+  password = '';
+  showSpinner = false;
 
 
-  constructor( 
-              public afAuth:AngularFireAuth,
-              public router:Router,
-              public alert:AlertController,
-              public loadingctrl:LoadingController,
-              private platform:Platform,
-              public toastcontroller:ToastController,
-              public fcm:FcmService
+  constructor(
+              public afAuth: AngularFireAuth,
+              public router: Router,
+              public alert: AlertController,
+              public loadingctrl: LoadingController,
+              private platform: Platform,
+              public toastcontroller: ToastController,
+              public fcm: FcmService
               ) { }
 
 
   ngOnInit() {
   }
 
-  async login(){
+  async login() {
 
-    const {username,password }=this
+    const {username, password } = this;
     try {
-      const res=await this.afAuth.auth.signInWithEmailAndPassword(username,password)
+      const res = await this.afAuth.auth.signInWithEmailAndPassword(username, password);
 
       const loading = await this.loadingctrl.create({
         message: 'Authenticating...',
         duration: 2000,
-        spinner:'bubbles'
+        spinner: 'bubbles'
       });
 
-       await loading.present();
+      await loading.present();
       const { role, data } = await loading.onDidDismiss();
-      
+
       console.log('Loading dismissed!');
-      
+
       // this.initializeApp()
 
       this.router.navigate(['/home']);
-      this.username="";
-      this.password="";
-      
+      this.username = '';
+      this.password = '';
+
 
     } catch (error) {
-      console.dir(error)
-      this.showAlert("Error",error.message)
+      console.dir(error);
+      this.showAlert('Error', error.message);
 
     }
   }
 
-  async showAlert(header:string,message:string){
-    const alert=await this.alert.create({
+  async showAlert(header: string, message: string) {
+    const alert = await this.alert.create({
       header,
       message,
-      buttons:["ok"]
-    })
+      buttons: ['ok']
+    });
 
-    await alert.present()
+    await alert.present();
   }
 
-  
+
   initializeApp() {
     this.platform.ready().then(() => {
       // this.statusBar.styleDefault();
       // this.splashScreen.hide();
-      this.notificationsSetup()
+      this.notificationsSetup();
     });
   }
-  
-  //notifications setup
-  private notificationsSetup(){
+
+  // notifications setup
+  private notificationsSetup() {
     this.fcm.getToken();
     this.fcm.onNotifications().subscribe(
-      msg=>{
-        if (msg.wasTapped){
+      msg => {
+        if (msg.wasTapped) {
           this.presentToast(msg.wasTapped);
-        }else{
+        } else {
           this.presentToast(msg.body);
         }
       }
       );
     }
-    
+
     // adding a toast
-    private async presentToast(message){
-      const toast=await this.toastcontroller.create({
+    private async presentToast(message) {
+      const toast = await this.toastcontroller.create({
         message,
-        duration:3000
-  
-      })
-  
+        duration: 3000
+
+      });
+
       toast.present();
     }
 
