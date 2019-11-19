@@ -90,11 +90,11 @@ export class HomePage {
         secondsLeft--;
 
         if(secondsLeft == 0) {
-          this.afdb.object('UserAlarms/' + this.userID + '/Alarm').set(1);
+          this.afdb.object('UserAlarms/' + this.userID + '/Alarm').set(0);
 
              // toogle the temporary state to 0 in the db once timer ends
           this.afdb.object('UserAlarms/' + this.userID + '/temporaryState').set(0);
-          this.pushAlarm();
+          // this.pushAlarm();
           this.state = true;
         }
       }
@@ -139,12 +139,12 @@ export class HomePage {
     this.remainingTime = `${this.timeLeft.m}:${this.timeLeft.s}`;
 
     // once timer is stopped automagically turn on the alarm
-    this.afdb.object('UserAlarms/' + this.userID + '/Alarm').set(1);
+    this.afdb.object('UserAlarms/' + this.userID + '/Alarm').set(0);
 
      // toogle the temporary state to 0 in the db once timer ends
     this.afdb.object('UserAlarms/' + this.userID + '/temporaryState').set(0);
  
-    this.pushAlarm();
+    // this.pushAlarm();
     this.state = true;
     this.showTemporary = false;
   }
@@ -187,7 +187,7 @@ export class HomePage {
 
       // toogle the temporary state to 1 in the db
       this.afdb.object('UserAlarms/' + this.userID + '/temporaryState').set(0);
-      this.pushAlarm();
+      // this.pushAlarm();
       this.state = true;
 
     }

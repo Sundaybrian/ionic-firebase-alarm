@@ -10,6 +10,9 @@ exports.newAlarmNotification=functions.database.ref('UserAlarms/{userId}').onWri
     //grab alarm value
     const alarmValue=data.Alarm
 
+    //grab temporary state
+    const temporaryState=data.temporaryState
+
     //grab user id
     const userId=data.userId
 
@@ -35,8 +38,27 @@ exports.newAlarmNotification=functions.database.ref('UserAlarms/{userId}').onWri
 
       })
 
+      if (temporaryState == 1) {
 
-    return admin.messaging().sendToDevice(token,payload)
+        //if temporary state is on dont send notification
+          return false
+          
+      } else {
+          //create alarm log
+       
+        // to be a cloud function
+        const d = new Date();
+        const today = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
+        const time = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+  
+    
+        db.ref('UserAlarmLogs/' + userId).child(today).push(time);
+    
+        //then send notification
+          return admin.messaging().sendToDevice(token,payload)
+      }
+
+
 })
 
 
