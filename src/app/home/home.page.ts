@@ -91,6 +91,9 @@ export class HomePage {
 
         if(secondsLeft == 0) {
           this.afdb.object('UserAlarms/' + this.userID + '/Alarm').set(1);
+
+             // toogle the temporary state to 0 in the db once timer ends
+          this.afdb.object('UserAlarms/' + this.userID + '/temporaryState').set(0);
           this.pushAlarm();
           this.state = true;
         }
@@ -137,6 +140,10 @@ export class HomePage {
 
     // once timer is stopped automagically turn on the alarm
     this.afdb.object('UserAlarms/' + this.userID + '/Alarm').set(1);
+
+     // toogle the temporary state to 0 in the db once timer ends
+    this.afdb.object('UserAlarms/' + this.userID + '/temporaryState').set(0);
+ 
     this.pushAlarm();
     this.state = true;
     this.showTemporary = false;
@@ -160,6 +167,9 @@ export class HomePage {
             handler: () => {
               console.log('temporary clicked');
               this.showTemporary = true;
+
+              // toogle the temporary state to 1 in the db
+              this.afdb.object('UserAlarms/' + this.userID + '/temporaryState').set(1);
             }
           }
         ]
@@ -174,6 +184,9 @@ export class HomePage {
     } else {
       this.stateText = 'Turn On';
       this.afdb.object('UserAlarms/' + this.userID + '/Alarm').set(1);
+
+      // toogle the temporary state to 1 in the db
+      this.afdb.object('UserAlarms/' + this.userID + '/temporaryState').set(0);
       this.pushAlarm();
       this.state = true;
 
