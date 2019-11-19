@@ -43,7 +43,8 @@ export class FcmService {
     const data = {
       userId,
       token,
-      email: this.afAuth.auth.currentUser.email
+      email: this.afAuth.auth.currentUser.email,
+      temporary_alarm_state: 0
     };
 
     return devicesRef.child(userId).set(data);

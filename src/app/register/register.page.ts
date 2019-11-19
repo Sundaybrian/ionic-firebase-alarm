@@ -50,7 +50,8 @@ export class RegisterPage implements OnInit {
         const userAlarmData = {
           username,
           userId: this.afAuth.auth.currentUser.uid,
-          Alarm: 0
+          Alarm: 0,
+          temporaryState: 0
 
         };
 

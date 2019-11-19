@@ -88,6 +88,12 @@ export class HomePage {
         this.timeLeft.s = secondsLeft - (60 * this.timeLeft.m);
         this.remainingTime = `${this.pad(this.timeLeft.m, 2)}:${this.pad(this.timeLeft.s, 2)}`;
         secondsLeft--;
+
+        if(secondsLeft == 0) {
+          this.afdb.object('UserAlarms/' + this.userID + '/Alarm').set(1);
+          this.pushAlarm();
+          this.state = true;
+        }
       }
     }, 1000);
 
@@ -128,7 +134,7 @@ export class HomePage {
       s: '00'
     };
     this.remainingTime = `${this.timeLeft.m}:${this.timeLeft.s}`;
-    
+
     // once timer is stopped automagically turn on the alarm
     this.afdb.object('UserAlarms/' + this.userID + '/Alarm').set(1);
     this.pushAlarm();
@@ -147,7 +153,7 @@ export class HomePage {
         buttons: [
           {
             text: 'Turn Off',
-            role: 'cancel'
+            role : 'cancel',
           },
           {
             text: 'Turn Off Temporarily',
@@ -195,6 +201,7 @@ export class HomePage {
   }
 
   pushAlarm() {
+    // to be a cloud function
     const d = new Date();
     const today = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
     const time = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
