@@ -25,18 +25,14 @@ export class AppComponent {
     private statusBar: StatusBar,
     public afAuth: AngularFireAuth,
     public router: Router,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    public loadingCtrl: LoadingController
   ) {
+    // load the sidemenu
     this.sideMenu();
 
-    // check if user is logged in and keep them there else redirect to homepage
-
-    this.afAuth.auth.onAuthStateChanged((user) => {
-
-      // login user if session has not expired or redirect to login if it has
-      user ? this.router.navigate(['/home']) : this.router.navigate(['/login']);
-
-    });
+    // login user to the app after app has left background
+    this.resumeSession();
 
   }
 
@@ -54,6 +50,28 @@ export class AppComponent {
         icon: 'alarm'
       }
     ];
+  }
+
+  async resumeSession() {
+    // check if user is logged in and keep them there else redirect to homepage
+
+    const loading = await this.loadingCtrl.create({
+      message: 'Resuming session...',
+      duration: 4000,
+      spinner: 'bubbles'
+    });
+
+    await loading.present();
+    const { role, data } = await loading.onDidDismiss();
+
+    this.afAuth.auth.onAuthStateChanged((user) => {
+
+      // login user if session has not expired or redirect to login if it has
+      user ? this.router.navigate(['/home']) : this.router.navigate(['/login']);
+
+    });
+
+
   }
 
   logout() {
