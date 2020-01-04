@@ -187,7 +187,7 @@ export class HomePage {
 
       // toogle the temporary state to 1 in the db
       this.afdb.object('UserAlarms/' + this.userID + '/temporaryState').set(0);
-      // this.pushAlarm();
+  
       this.state = true;
 
     }
@@ -196,10 +196,14 @@ export class HomePage {
 
 
   getAlarm() {
+
+    // get current logged in user ID
     this.userID = this.afAuth.auth.currentUser.uid;
 
+    // grab the current logged in user alarm reference
     this.alarmRef = this.afdb.object('UserAlarms/' + this.userID + '/Alarm').valueChanges();
 
+    // subcribe to the alarm ref obervable for the value changes
     this.alarmRef.subscribe(x => {
       this.alarmvalue = x;
       if (this.alarmvalue == 1) {
@@ -213,17 +217,17 @@ export class HomePage {
 
   }
 
-  pushAlarm() {
-    // to be a cloud function
-    const d = new Date();
-    const today = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
-    const time = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
-    const user = this.afAuth.auth.currentUser.uid;
+  // pushAlarm() {
+  //   // to be a cloud function
+  //   const d = new Date();
+  //   const today = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
+  //   const time = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+  //   const user = this.afAuth.auth.currentUser.uid;
 
-    this.afdb.database.ref('UserAlarmLogs/' + user).child(today).push(time);
+  //   this.afdb.database.ref('UserAlarmLogs/' + user).child(today).push(time);
 
-    console.log('pushed alarm  1', today, time);
-  }
+  //   console.log('pushed alarm  1', today, time);
+  // }
 
 
 }

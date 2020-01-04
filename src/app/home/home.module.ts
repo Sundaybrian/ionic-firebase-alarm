@@ -24,13 +24,13 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     NgCircleProgressModule.forRoot({
       //set defaults
       radius:100,
-      outerStrokeWidth:16,
-      innerStrokeWidth:8,
+      outerStrokeWidth: 16,
+      innerStrokeWidth: 8,
       outerStrokeColor: "#78C000",
       innerStrokeColor: "#C7E596",
-      animation:false,
-      responsive:true,
-      renderOnClick:false
+      animation: false,
+      responsive: true,
+      renderOnClick: false
     })
   ],
   declarations: [HomePage]

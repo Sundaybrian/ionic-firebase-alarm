@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 
-import { Platform, ToastController } from '@ionic/angular';
+import { Platform, ToastController, NavController, LoadingController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AlarmPage } from './alarm/alarm.page';
 import { FcmService } from './Services/fcm.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { HomePage } from './home/home.page';
 
 
 @Component({
@@ -16,43 +17,52 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
 
-  navigate:any
+  navigate: any;
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    public afAuth:AngularFireAuth,
-    public router:Router
+    public afAuth: AngularFireAuth,
+    public router: Router,
+    public navCtrl: NavController
   ) {
-    this.sideMenu()
+    this.sideMenu();
+
+    // check if user is logged in and keep them there else redirect to homepage
+
+    this.afAuth.auth.onAuthStateChanged((user) => {
+
+      // login user if session has not expired or redirect to login if it has
+      user ? this.router.navigate(['/home']) : this.router.navigate(['/login']);
+
+    });
+
   }
 
 
-  sideMenu(){
-    this.navigate=[
+  sideMenu() {
+    this.navigate = [
       {
-        title:"Home",
-        url:'/home',
-        icon:'home'
+        title: 'Home',
+        url: '/home',
+        icon: 'home'
       },
       {
-        title:'Logs',
-        url:'/logs',
-        icon:'alarm'
+        title: 'Logs',
+        url: '/logs',
+        icon: 'alarm'
       }
-      // ,
-      // {
-      //   title:'Logout',
-      //   url:'/logout',
-      //   icon:'log-out'
-      // }
-    ]
+    ];
   }
 
-  logout(){
-    this.afAuth.auth.signOut()
-    this.router.navigate(['/login'])
+  logout() {
+    // logout user
+    this.afAuth.auth.signOut();
+
+    // navigate to login page
+
+    this.router.navigate(['/login']);
   }
 
 }

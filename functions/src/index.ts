@@ -51,7 +51,7 @@ exports.newAlarmNotification=functions.database.ref('UserAlarms/{userId}').onWri
         const today = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
         const time = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
   
-    
+        // create alarm log
         db.ref('UserAlarmLogs/' + userId).child(today).push(time);
     
         //then send notification
@@ -60,5 +60,4 @@ exports.newAlarmNotification=functions.database.ref('UserAlarms/{userId}').onWri
 
 
 })
-
 

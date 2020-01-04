@@ -49,8 +49,10 @@ export class LoginPage implements OnInit {
 
       console.log('Loading dismissed!');
 
+      // call initialize app to setup the notification
       this.initializeApp();
 
+      // navigate user to home page
       this.router.navigate(['/home']);
       this.username = '';
       this.password = '';
