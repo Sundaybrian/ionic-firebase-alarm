@@ -9,11 +9,12 @@ const routes: Routes = [
         children: [
             {
                 path: 'alarm',
-                loadChildren: './alarm/alarm.module#AlarmPageModule',
+                loadChildren: () => import('./alarm/alarm.module').then( m => m.AlarmPageModule)
             },
             {
                 path: 'logss',
-                loadChildren: './logss/logss.module#LogssPageModule'
+                loadChildren: () => import('./logss/logss.module').then( m => m.LogssPageModule)
+
             },
             {
                 path: '',

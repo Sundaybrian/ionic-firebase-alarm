@@ -22,12 +22,11 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     NgCircleProgressModule.forRoot({
-      //set defaults
-      radius:100,
+      radius: 100,
       outerStrokeWidth: 16,
       innerStrokeWidth: 8,
-      outerStrokeColor: "#78C000",
-      innerStrokeColor: "#C7E596",
+      outerStrokeColor: '#78C000',
+      innerStrokeColor: '#C7E596',
       animation: false,
       responsive: true,
       renderOnClick: false
