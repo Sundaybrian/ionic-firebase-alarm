@@ -1,6 +1,6 @@
 <ion-header>
     <ion-toolbar color="primary">
-      <ion-title>{{ isLogin ? 'Login' : 'Register'}}</ion-title>
+      <ion-title>{{ isLogin ? 'Login' : 'SignUp'}}</ion-title>
     </ion-toolbar>
   </ion-header>
   
@@ -81,7 +81,7 @@
                 expand="block"
                 [disabled]="!f.valid"
                 type="submit"
-                >Login</ion-button>
+                >{{ isLogin ? 'Login' : 'SignUp'}}</ion-button>
             </ion-col>
           </ion-row>
 
