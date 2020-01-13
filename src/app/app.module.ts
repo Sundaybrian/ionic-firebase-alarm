@@ -13,23 +13,24 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule} from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { FIREBASE_CREDENTIALS } from './firebase.credentials';
-import { AlarmPage } from './alarm/alarm.page';
 
 // importing fcm
 import { FCM } from '@ionic-native/fcm/ngx';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 
 @NgModule({
-  declarations: [AppComponent,AlarmPage,LoadingSpinnerComponent],
-  entryComponents: [AlarmPage],
+  declarations: [
+    AppComponent,
+    LoadingSpinnerComponent
+  ],
+  entryComponents: [],
   imports: [
-      BrowserModule, 
-      IonicModule.forRoot(), 
+      BrowserModule,
+      IonicModule.forRoot(),
       AppRoutingModule,
       AngularFireModule.initializeApp(FIREBASE_CREDENTIALS),
       AngularFireDatabaseModule,
       AngularFireAuthModule,
-      
   ],
   providers: [
     StatusBar,

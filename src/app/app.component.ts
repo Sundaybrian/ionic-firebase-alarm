@@ -3,11 +3,9 @@ import { Component } from '@angular/core';
 import { Platform, ToastController, NavController, LoadingController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { AlarmPage } from './alarm/alarm.page';
-import { FcmService } from './Services/fcm.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { HomePage } from './home/home.page';
+
 
 
 @Component({

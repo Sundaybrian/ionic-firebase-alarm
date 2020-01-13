@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
-import { NgCircleProgressModule } from 'ng-circle-progress';
 
 import { HomePage } from './home.page';
 import { HomeRoutingModule } from './home-routing.module';
@@ -12,18 +11,7 @@ import { HomeRoutingModule } from './home-routing.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    HomeRoutingModule,
-    NgCircleProgressModule.forRoot({
-      //set defaults
-      radius:100,
-      outerStrokeWidth: 16,
-      innerStrokeWidth: 8,
-      outerStrokeColor: "#78C000",
-      innerStrokeColor: "#C7E596",
-      animation: false,
-      responsive: true,
-      renderOnClick: false
-    })
+    HomeRoutingModule, 
   ],
   declarations: [HomePage]
 })
