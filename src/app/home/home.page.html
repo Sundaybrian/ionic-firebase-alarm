@@ -1,29 +1,4 @@
-<!-- <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title  *ngIf="(afAuth.user | async )as user;">
-        {{user.email}}
-    </ion-title>
 
-    <ion-buttons (click)='logout()' slot="end">
-      <ion-button>
-        <ion-icon slot="icon-only" name="log-out"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    
-   
-  </ion-toolbar>
-</ion-header> -->
-
-<ion-header>
-    <ion-toolbar color="primary">
-        <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-        </ion-buttons>
-      <ion-title>
-        Home
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
 
 <ion-content class="ion-padding" *ngIf="state">
   <div>

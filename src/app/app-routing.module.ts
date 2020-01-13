@@ -7,7 +7,7 @@ const routes: Routes = [
   // { path: 'alarm', loadChildren: './alarm/alarm.module#AlarmPageModule' },
   // { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   // { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
-  // { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
+  { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
   // { path: 'logs', loadChildren: './logs/logs.module#LogsPageModule' },
   // { path: 'alarm', loadChildren: './home/alarm/alarm.module#AlarmPageModule' },
   // { path: 'logss', loadChildren: './home/logss/logss.module#LogssPageModule' },

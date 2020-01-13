@@ -9,15 +9,25 @@ const routes: Routes = [
         children: [
             {
                 path: 'alarm',
-                loadChildren: './home/alarm/alarm.module#AlarmPageModule',
+                loadChildren: './alarm/alarm.module#AlarmPageModule',
             },
             {
                 path: 'logss',
-                loadChildren: './home/logss/logss.module#LogssPageModule'
+                loadChildren: './logss/logss.module#LogssPageModule'
+            },
+            {
+                path: '',
+                redirectTo: '/home/tabs/alarm',
+                pathMatch: 'full'
             }
         ]
+    },
+    {
+        path: '',
+        redirectTo: '/home/tabs/alarm',
+        pathMatch: 'full'
     }
-]
+];
 
 
 @NgModule({
