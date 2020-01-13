@@ -15,11 +15,11 @@ import { AngularFireAuth } from '@angular/fire/auth';
 export class FcmService {
 
   constructor(
-              private fcm: FCM,
-              private afdb: AngularFireDatabase,
-              private platform: Platform,
-              public afAuth: AngularFireAuth
-              ) { }
+    private fcm: FCM,
+    private afdb: AngularFireDatabase,
+    private platform: Platform,
+    public afAuth: AngularFireAuth
+    ) { }
 
   // get permission from the user
   async getToken() {
@@ -55,4 +55,17 @@ export class FcmService {
   onNotifications() {
     return this.fcm.onNotification();
   }
+
+  isAuthenticated() {
+
+   const user = this.afAuth.auth.currentUser;
+
+   if (user) {
+     return true;
+  }
+
+  return false;
+
+}
+
 }

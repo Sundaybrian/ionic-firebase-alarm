@@ -72,7 +72,7 @@ export class AppComponent {
 
   }
 
-  logout() {
+  onLogout() {
     // logout user
     this.afAuth.auth.signOut();
 
