@@ -17,6 +17,7 @@ import { FIREBASE_CREDENTIALS } from './firebase.credentials';
 // importing fcm
 import { FCM } from '@ionic-native/fcm/ngx';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [

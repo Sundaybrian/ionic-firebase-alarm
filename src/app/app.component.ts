@@ -65,7 +65,7 @@ export class AppComponent {
     this.afAuth.auth.onAuthStateChanged((user) => {
 
       // login user if session has not expired or redirect to login if it has
-      user ? this.router.navigate(['/home']) : this.router.navigate(['/login']);
+      user ? this.router.navigate(['/home']) : this.router.navigate(['/auth']);
 
     });
 
@@ -77,7 +77,6 @@ export class AppComponent {
     this.afAuth.auth.signOut();
 
     // navigate to login page
-
     this.router.navigate(['/login']);
   }
 

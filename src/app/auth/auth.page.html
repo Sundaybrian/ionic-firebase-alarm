@@ -16,6 +16,7 @@
                      type="email"
                      ngModel
                      email
+                     name="email"
                      [ngClass]="{'is-invalid':emailCtrl.errors && emailCtrl.touched}"
                      #emailCtrl="ngModel"
                      pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
@@ -46,7 +47,6 @@
                         [ngClass]="{'is-invalid':passwordCtrl.errors && passwordCtrl.touched}"
                         minlength="8"
                         #passwordCtrl="ngModel"
-                      
                         ></ion-input>
                       </ion-item>
                       <!--errors password  -->
@@ -78,7 +78,6 @@
     
                 <ion-button 
                 color="primary"
-                (click)="onLogin()"
                 expand="block"
                 [disabled]="!f.valid"
                 type="submit"
@@ -92,9 +91,9 @@
   
   
   <!-- Bubbles -->
-  <ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
+  <!-- <ion-spinner name="bubbles" *ngIf="showSpinner"></ion-spinner>
   
     <ion-button fill="solid" color="primary" expand="block" (click)="login()">Login</ion-button>
-    <p>Need an account? <a [routerLink]="'/register'">Register</a></p>
+    <p>Need an account? <a [routerLink]="'/register'">Register</a></p> -->
   </ion-content>
   
