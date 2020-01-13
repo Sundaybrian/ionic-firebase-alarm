@@ -9,6 +9,8 @@ const routes: Routes = [
   { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
   { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
   { path: 'logs', loadChildren: './logs/logs.module#LogsPageModule' },
+  { path: 'alarm', loadChildren: './home/alarm/alarm.module#AlarmPageModule' },
+  { path: 'logss', loadChildren: './home/logss/logss.module#LogssPageModule' },
 ];
 
 @NgModule({
