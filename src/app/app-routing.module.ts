@@ -2,15 +2,16 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)},
-  { path: 'alarm', loadChildren: './alarm/alarm.module#AlarmPageModule' },
-  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
-  { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
-  { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
-  { path: 'logs', loadChildren: './logs/logs.module#LogsPageModule' },
-  { path: 'alarm', loadChildren: './home/alarm/alarm.module#AlarmPageModule' },
-  { path: 'logss', loadChildren: './home/logss/logss.module#LogssPageModule' },
+  // { path: 'alarm', loadChildren: './alarm/alarm.module#AlarmPageModule' },
+  // { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
+  // { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
+  // { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
+  // { path: 'logs', loadChildren: './logs/logs.module#LogsPageModule' },
+  // { path: 'alarm', loadChildren: './home/alarm/alarm.module#AlarmPageModule' },
+  // { path: 'logss', loadChildren: './home/logss/logss.module#LogssPageModule' },
+  { path: 'auth', loadChildren: './auth/auth.module#AuthPageModule' },
 ];
 
 @NgModule({
