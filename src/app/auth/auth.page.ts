@@ -54,5 +54,4 @@ export class AuthPage implements OnInit {
     this.isLogin = !this.isLogin;
   }
 
- 
 }

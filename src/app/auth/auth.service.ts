@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { FcmService } from '../Services/fcm.service';
 import { AlertController, LoadingController, ToastController, Platform } from '@ionic/angular';
+import { AngularFireDatabase } from '@angular/fire/database';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class AuthService {
     private platform: Platform,
     public loadingctrl: LoadingController,
     public toastcontroller: ToastController,
+    public afdb: AngularFireDatabase,
   ) { }
 
 
@@ -47,6 +49,45 @@ export class AuthService {
 
     }
   }
+
+  // async register() {
+
+  //   // to register a user
+
+  //   const{ username, password, cpassword } = this;
+
+  //   if (password !== cpassword) {
+  //       this.showAlert('Error', 'Passwords dont match');
+  //       return console.error('Passwords dont match');
+  //     }
+
+
+  //   try {
+
+  //       const res = await this.afAuth.auth.createUserWithEmailAndPassword(username, password);
+
+  //       const userAlarmRef = this.afdb.database.ref('UserAlarms');
+
+  //       const userAlarmData = {
+  //         username,
+  //         userId: this.afAuth.auth.currentUser.uid,
+  //         Alarm: 0,
+  //         temporaryState: 0
+
+  //       };
+
+  //       userAlarmRef.child(userAlarmData.userId).set(userAlarmData);
+
+  //       this.showAlert('Succes', 'Welcome Aboard');
+  //       this.router.navigate(['/home']);
+
+  //     } catch (error) {
+  //       console.dir(error);
+  //       this.showAlert('Error', error.message);
+
+  //     }
+
+  // }
 
   async showAlert(header: string, message: string) {
     const alert = await this.alert.create({
