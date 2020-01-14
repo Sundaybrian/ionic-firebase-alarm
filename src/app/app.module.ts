@@ -18,6 +18,7 @@ import { FIREBASE_CREDENTIALS } from './firebase.credentials';
 import { FCM } from '@ionic-native/fcm/ngx';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { FormsModule } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { FormsModule } from '@angular/forms';
       BrowserModule,
       IonicModule.forRoot(),
       AppRoutingModule,
-      AngularFireModule.initializeApp(FIREBASE_CREDENTIALS),
+      AngularFireModule.initializeApp(environment.firebase),
       AngularFireDatabaseModule,
       AngularFireAuthModule,
   ],

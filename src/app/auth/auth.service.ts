@@ -50,44 +50,44 @@ export class AuthService {
     }
   }
 
-  // async register() {
+  async register( email, password) {
 
-  //   // to register a user
+    // to register a user
 
-  //   const{ username, password, cpassword } = this;
+    // const{ username, password, cpassword } = this;
 
-  //   if (password !== cpassword) {
-  //       this.showAlert('Error', 'Passwords dont match');
-  //       return console.error('Passwords dont match');
-  //     }
+    // if (password !== cpassword) {
+    //     this.showAlert('Error', 'Passwords dont match');
+    //     return console.error('Passwords dont match');
+    //   }
 
 
-  //   try {
+    try {
 
-  //       const res = await this.afAuth.auth.createUserWithEmailAndPassword(username, password);
+        const res = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
 
-  //       const userAlarmRef = this.afdb.database.ref('UserAlarms');
+        const userAlarmRef = this.afdb.database.ref('UserAlarms');
 
-  //       const userAlarmData = {
-  //         username,
-  //         userId: this.afAuth.auth.currentUser.uid,
-  //         Alarm: 0,
-  //         temporaryState: 0
+        const userAlarmData = {
+          email,
+          userId: this.afAuth.auth.currentUser.uid,
+          Alarm: 0,
+          temporaryState: 0
 
-  //       };
+        };
 
-  //       userAlarmRef.child(userAlarmData.userId).set(userAlarmData);
+        userAlarmRef.child(userAlarmData.userId).set(userAlarmData);
 
-  //       this.showAlert('Succes', 'Welcome Aboard');
-  //       this.router.navigate(['/home']);
+        this.showAlert('Success', 'Welcome Aboard');
+        this.router.navigate(['/home']);
 
-  //     } catch (error) {
-  //       console.dir(error);
-  //       this.showAlert('Error', error.message);
+      } catch (error) {
+        console.dir(error);
+        this.showAlert('Error', error.message);
 
-  //     }
+      }
 
-  // }
+  }
 
   async showAlert(header: string, message: string) {
     const alert = await this.alert.create({

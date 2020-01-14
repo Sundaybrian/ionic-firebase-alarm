@@ -45,7 +45,8 @@ export class AuthPage implements OnInit {
       this.authService.login(email, password);
 
     } else {
-      // signup
+      // register a new user
+      this.authService.register(email, password);
     }
   }
 
