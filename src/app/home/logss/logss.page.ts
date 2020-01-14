@@ -32,41 +32,19 @@ export class LogssPage implements OnInit {
 
     this.userAlarmRef = this.afdb.object('UserAlarmLogs/'+this.userId).valueChanges();
 
-    // this.userAlarmRef.on('value',function(snap){
-    //   // snap.val() is an object with multiple objects
-    //   console.log(snap.val(),"snap.val")
-
-    //   // so we loop each object
-    //   snap.forEach(childSnap => {
-    //     //grabbing each obj in snap
-    //     var val=childSnap.val()
-
-    //     console.log(val,'children')
-
-    //     // pushing each alarm date obj to myalarms array
-    //     localAlarms.push(childSnap.val())
-    //     console.log(localAlarms,"localalarams")
-
-    //   });
-
-    // })
-
     this.userAlarmRef.subscribe(dates => {
       for (const key in dates) {
         if (dates.hasOwnProperty(key)) {
           // const element = object[key];
-         
-          console.log(dates[key],"geniussssssssssss");
-          this.myAlarmDates.push(key)
-          this.myAlarms.push(dates[key])
-          
+          console.log(dates[key], 'geniussssssssssss');
+          // push the dates
+          this.myAlarmDates.push(key);
+
+          //
+          this.myAlarms.push(dates[key]);
         }
       }
-    
     });
-    
-
-
 
   }
 

@@ -7,30 +7,44 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" *ngIf="state">
+<!-- <ion-content class="ion-padding" *ngIf="state">
     <div>
         <p>Alarm:{{alarmvalue}}</p>
           <ion-button expand="block" (click)="toggleState()">{{stateText}}</ion-button>
       </div>
-    </ion-content>
+    </ion-content> -->
     
-    <ion-content class="ion-padding" *ngIf="!state">
+    <ion-content class="ion-padding" >
         <div class="off-buttons">
             <ion-grid>
+              <ion-row>
+                  <ion-col size="6" offset="3" *ngIf="!showTemporary" size-sm="6">
+                      <ion-label>
+                          Alarm:{{alarmvalue}}
+                      </ion-label>
+                    </ion-col>
+              </ion-row>
+
                 <ion-row>
-                  <ion-col *ngIf="!showTemporary">
-                    <p>Alarm:{{alarmvalue}}</p>
+                  <ion-col *ngIf="!showTemporary" size-sm="6">
                     <ion-button expand="block" (click)="toggleState()">{{stateText}}</ion-button>
                   </ion-col>
-    
+
+                  <ion-col *ngIf="!showTemporary" size-sm="6">
+                    
+                    <ion-button expand="block" (click)="temporaryOff()" color="secondary">Temporary Off</ion-button>
+                  </ion-col>
+
                   <ion-col *ngIf="showTemporary">
-                    <ion-item color="dark">
+                    <ion-item color="secondary">
                         <ion-label>Temporary Disable</ion-label>
                         <ion-datetime display-format="mm:ss" placeholder="Tap here" [(ngModel)]="fullTime"></ion-datetime>
                       </ion-item>
                   </ion-col>
-    
                 </ion-row>
+
+
+
             </ion-grid>
         </div>
        
@@ -59,17 +73,14 @@
               <ng-container *ngIf="timer == false; else running">
                 <ion-fab-button (click)="startTime()">
                   <ion-icon name="play"></ion-icon>
-              
                 </ion-fab-button>
               </ng-container>
         
               <ng-template #running>
                 <ion-fab-button (click)="stopTime()">
                   <ion-icon name="square"></ion-icon>
-        
                 </ion-fab-button>
               </ng-template>
-        
             </ion-fab> 
 
 </ion-content>

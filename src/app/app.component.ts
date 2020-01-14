@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Platform, ToastController, NavController, LoadingController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -13,9 +13,10 @@ import { Router } from '@angular/router';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   navigate: any;
+  currentUser: any;
 
   constructor(
     private platform: Platform,
@@ -26,28 +27,15 @@ export class AppComponent {
     public navCtrl: NavController,
     public loadingCtrl: LoadingController
   ) {
-    // load the sidemenu
-    this.sideMenu();
-
     // login user to the app after app has left background
     this.resumeSession();
 
   }
 
-
-  sideMenu() {
-    this.navigate = [
-      {
-        title: 'Home',
-        url: '/home',
-        icon: 'home'
-      },
-      {
-        title: 'Logs',
-        url: '/logs',
-        icon: 'alarm'
-      }
-    ];
+  ngOnInit() {
+    // fetch user
+    this.currentUser = this.afAuth.auth.currentUser.email;
+    console.log(this.currentUser);
   }
 
   async resumeSession() {
@@ -55,7 +43,7 @@ export class AppComponent {
 
     const loading = await this.loadingCtrl.create({
       message: 'Resuming session...',
-      duration: 4000,
+      duration: 2000,
       spinner: 'bubbles'
     });
 

@@ -63,7 +63,6 @@ export class AlarmPage implements OnInit {
   }
 
   ngOnInit() {
-    
   }
 
   startTime() {
@@ -168,11 +167,8 @@ export class AlarmPage implements OnInit {
           {
             text: 'Turn Off Temporarily',
             handler: () => {
-              console.log('temporary clicked');
-              this.showTemporary = true;
-
-              // toogle the temporary state to 1 in the db
-              this.afdb.object('UserAlarms/' + this.userID + '/temporaryState').set(1);
+              // call temporary off
+              this.temporaryOff();
             }
           }
         ]
@@ -190,7 +186,6 @@ export class AlarmPage implements OnInit {
 
       // toogle the temporary state to 1 in the db
       this.afdb.object('UserAlarms/' + this.userID + '/temporaryState').set(0);
-  
       this.state = true;
 
     }
@@ -220,17 +215,13 @@ export class AlarmPage implements OnInit {
 
   }
 
-  // pushAlarm() {
-  //   // to be a cloud function
-  //   const d = new Date();
-  //   const today = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
-  //   const time = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
-  //   const user = this.afAuth.auth.currentUser.uid;
+  temporaryOff() {
+    console.log('temporary clicked');
+    this.showTemporary = true;
 
-  //   this.afdb.database.ref('UserAlarmLogs/' + user).child(today).push(time);
-
-  //   console.log('pushed alarm  1', today, time);
-  // }
+    // toogle the temporary state to 1 in the db
+    this.afdb.object('UserAlarms/' + this.userID + '/temporaryState').set(1);
+  }
 
 
 }
