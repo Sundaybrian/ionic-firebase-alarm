@@ -7,12 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<!-- <ion-content class="ion-padding" *ngIf="state">
-    <div>
-        <p>Alarm:{{alarmvalue}}</p>
-          <ion-button expand="block" (click)="toggleState()">{{stateText}}</ion-button>
-      </div>
-    </ion-content> -->
+
     
     <ion-content class="ion-padding" >
         <div class="off-buttons">
@@ -50,7 +45,7 @@
        
         
             <div class="circle-progress-container" *ngIf="showTemporary">
-                <circle-progress (click)="startTime()"
+                <circle-progress 
               [percent]="percent"
               [maxPercent]="100"
               [radius]="radius"

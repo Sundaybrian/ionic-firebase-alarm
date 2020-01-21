@@ -66,7 +66,10 @@ export class AlarmPage implements OnInit {
   }
 
   startTime() {
-    console.log('clicked svg');
+    console.log('start temporary time');
+
+    // toogle the temporary state to 1 in the db
+    this.afdb.object('UserAlarms/' + this.userID + '/temporaryState').set(1);
 
     if (this.timer) {
       clearInterval(this.timer);
@@ -91,12 +94,13 @@ export class AlarmPage implements OnInit {
         this.remainingTime = `${this.pad(this.timeLeft.m, 2)}:${this.pad(this.timeLeft.s, 2)}`;
         secondsLeft--;
 
-        if(secondsLeft == 0) {
-          this.afdb.object('UserAlarms/' + this.userID + '/Alarm').set(0);
+        if (secondsLeft == 0) {
+          // check if the timer has ended
+          // this.afdb.object('UserAlarms/' + this.userID + '/Alarm').set(0);
 
-             // toogle the temporary state to 0 in the db once timer ends
+            // toogle the temporary state to 0 in the db once timer ends
           this.afdb.object('UserAlarms/' + this.userID + '/temporaryState').set(0);
-          // this.pushAlarm();
+
           this.state = true;
         }
       }
@@ -123,6 +127,7 @@ export class AlarmPage implements OnInit {
   }
 
   stopTime() {
+    // stop the timer
     clearInterval(this.timer);
     clearInterval(this.countDownTimer);
     this.timer = false;
@@ -141,12 +146,12 @@ export class AlarmPage implements OnInit {
     this.remainingTime = `${this.timeLeft.m}:${this.timeLeft.s}`;
 
     // once timer is stopped automagically turn on the alarm
-    this.afdb.object('UserAlarms/' + this.userID + '/Alarm').set(0);
+    // this.afdb.object('UserAlarms/' + this.userID + '/Alarm').set(0);
 
      // toogle the temporary state to 0 in the db once timer ends
     this.afdb.object('UserAlarms/' + this.userID + '/temporaryState').set(0);
  
-    // this.pushAlarm();
+    // toggle states
     this.state = true;
     this.showTemporary = false;
   }
@@ -157,8 +162,8 @@ export class AlarmPage implements OnInit {
       this.stateText = 'Turn Off';
       // need to inject a modal or action sheet for the user to actually decide to turn off or temporary disable the alarm
       this.alertCtrl.create({
-        header: 'Choose an an action',
-        message: 'Turn of temporarily or turn off completely?',
+        header: 'Choose an action',
+        message: 'Turn off temporarily or turn off completely?',
         buttons: [
           {
             text: 'Turn Off',
@@ -184,7 +189,7 @@ export class AlarmPage implements OnInit {
       this.stateText = 'Turn On';
       this.afdb.object('UserAlarms/' + this.userID + '/Alarm').set(1);
 
-      // toogle the temporary state to 1 in the db
+      // toogle the temporary state to 0 in the db
       this.afdb.object('UserAlarms/' + this.userID + '/temporaryState').set(0);
       this.state = true;
 
@@ -219,8 +224,8 @@ export class AlarmPage implements OnInit {
     console.log('temporary clicked');
     this.showTemporary = true;
 
-    // toogle the temporary state to 1 in the db
-    this.afdb.object('UserAlarms/' + this.userID + '/temporaryState').set(1);
+    // // toogle the temporary state to 1 in the db
+    // this.afdb.object('UserAlarms/' + this.userID + '/temporaryState').set(1);
   }
 
 

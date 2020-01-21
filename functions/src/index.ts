@@ -32,7 +32,7 @@ exports.newAlarmNotification=functions.database.ref('UserAlarms/{userId}').onWri
     db.ref(`devices/${userId}`).on('value',function(snap){
 
         if(snap != null) {
-            token=snap.val()['token']
+            token = snap.val()['token']
         }
 
 
@@ -40,7 +40,7 @@ exports.newAlarmNotification=functions.database.ref('UserAlarms/{userId}').onWri
 
       if (temporaryState == 1) {
 
-        //if temporary state is on dont send notification
+        //if temporary state is on don't send notification
           return false
           
       } else {
