@@ -60,12 +60,12 @@ export class AlarmPage implements OnInit {
     private alertCtrl: AlertController,
     private networkService: NetworkStateService,
     private network: Network,
-    ngZone: NgZone
+    public ngZone: NgZone
   ) {
     // check internet connection
     // watch network for a disconnection
     this.disconnectSubscription$ = this.network.onDisconnect().subscribe(() => {
-      ngZone.run(() => {
+      this.ngZone.run(() => {
         this.networkStatus = false;
       });
 
@@ -75,7 +75,7 @@ export class AlarmPage implements OnInit {
     // watch network for a connection
     this.connectSubscription$ = this.network.onConnect().subscribe(() => {
       this.networkService.presentToast(`You're online! 😄 `);
-      ngZone.run(() => {
+      this.ngZone.run(() => {
         setTimeout(() => {
           if (this.network.type !== "none") {
             this.networkService.presentToast(
@@ -90,9 +90,19 @@ export class AlarmPage implements OnInit {
       // before we determine the connection type. Might need to wait.
       // prior to doing any api requests as well.
     });
+    
   }
 
   ngOnInit() {
+    // if we have internet connections
+    if (navigator.onLine) {
+      this.networkStatus = true;
+      this.getAlarm();
+
+    } else {
+      this.networkStatus = false ;
+    }
+
   }
 
   startTime() {
