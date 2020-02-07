@@ -7,7 +7,6 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 
 
-
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -25,7 +24,8 @@ export class AppComponent implements OnInit {
     public afAuth: AngularFireAuth,
     public router: Router,
     public navCtrl: NavController,
-    public loadingCtrl: LoadingController
+    public loadingCtrl: LoadingController,
+
   ) {
     // login user to the app after app has left background
     this.resumeSession();

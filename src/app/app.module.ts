@@ -13,12 +13,14 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule} from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { FIREBASE_CREDENTIALS } from './firebase.credentials';
+import { Network } from '@ionic-native/network/ngx';
 
 // importing fcm
 import { FCM } from '@ionic-native/fcm/ngx';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { FormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
+import { NetworkStateService } from './Services/network-state.service';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { environment } from 'src/environments/environment';
     StatusBar,
     SplashScreen,
     FCM,
+    Network,
+    NetworkStateService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

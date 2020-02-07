@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { FcmService } from '../Services/fcm.service';
 import { AlertController, LoadingController, ToastController, Platform } from '@ionic/angular';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { NetworkStateService } from '../Services/network-state.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class AuthService {
     public loadingctrl: LoadingController,
     public toastcontroller: ToastController,
     public afdb: AngularFireDatabase,
+    private network: NetworkStateService,
   ) { }
 
 
@@ -53,14 +55,6 @@ export class AuthService {
   async register( email, password) {
 
     // to register a user
-
-    // const{ username, password, cpassword } = this;
-
-    // if (password !== cpassword) {
-    //     this.showAlert('Error', 'Passwords dont match');
-    //     return console.error('Passwords dont match');
-    //   }
-
 
     try {
 
@@ -113,6 +107,7 @@ export class AuthService {
     this.platform.ready().then(() => {
       // this.statusBar.styleDefault();
       // this.splashScreen.hide();
+      // check networl state
       this.notificationsSetup();
     });
   }

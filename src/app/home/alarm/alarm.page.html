@@ -1,14 +1,13 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar [color]="networkStatus ? 'primary' : 'dark'">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Alarm</ion-title>
+    <ion-title>{{ networkStatus ? 'Alarm' : 'Offline'}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 
-    
     <ion-content class="ion-padding" >
         <div class="off-buttons">
             <ion-grid>
@@ -22,12 +21,12 @@
 
                 <ion-row>
                   <ion-col *ngIf="!showTemporary" size-sm="6">
-                    <ion-button expand="block" (click)="toggleState()">{{stateText}}</ion-button>
+                    <ion-button expand="block" (click)="toggleState()" [disabled]="!networkStatus">{{stateText}}</ion-button>
                   </ion-col>
 
                   <ion-col *ngIf="!showTemporary" size-sm="6">
                     
-                    <ion-button expand="block" (click)="temporaryOff()" color="secondary">Temporary Off</ion-button>
+                    <ion-button expand="block" (click)="temporaryOff()" color="secondary" [disabled]="!networkStatus">Temporary Off</ion-button>
                   </ion-col>
 
                   <ion-col *ngIf="showTemporary">
