@@ -10,9 +10,9 @@
 </ion-header>
 
 <ion-content >
-  <ion-list *ngFor="let alarm of myAlarms;let i=index">
+  <ion-list *ngFor="let alarm of myAlarmDatesData | async">
       <ion-list-header>
-        Date:{{myAlarmDates[i]}}
+        Date:{{alarm.key}}
       </ion-list-header>
       <ion-item *ngFor="let item of alarm | keyvalue">
           Time On:{{item.value | date:'short':'+0300' }}
