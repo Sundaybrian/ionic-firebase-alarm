@@ -48,11 +48,11 @@ exports.newAlarmNotification=functions.database.ref('UserAlarms/{userId}').onWri
        
         // to be a cloud function
         const d = new Date();
-        const today = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
-        const time = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
-  
+        const time = d.getTime();
+        // const today = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
+       
         // create alarm log
-        db.ref('UserAlarmLogs/' + userId).child(today).push(time);
+        db.ref('UserAlarmLogs/' + userId).child(d.toDateString()).push(time);
     
         //then send notification
           return admin.messaging().sendToDevice(token,payload)

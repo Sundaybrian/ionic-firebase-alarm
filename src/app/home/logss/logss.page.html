@@ -14,9 +14,8 @@
       <ion-list-header>
         Date:{{myAlarmDates[i]}}
       </ion-list-header>
-      
       <ion-item *ngFor="let item of alarm | keyvalue">
-          Time On:{{item.value}}
+          Time On:{{item.value | date:'short':'+0300' }}
       </ion-item>
       
     </ion-list>
