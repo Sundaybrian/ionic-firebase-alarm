@@ -24,3 +24,31 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+// @import url('https://fonts.googleapis.com/css?family=Montserrat:300');
+
+// ion-content{
+//     font-family: 'Montserrat';
+// }
+
+
+.picker-toolbar.sc-ion-picker-md{
+    border-bottom: 0;
+}
+
+.picker-wrapper.sc-ion-picker-md{
+    border-top: 0;
+}
+
+.picker-wrapper.sc-ion-picker-md{
+    background:#2b2b2b;
+}
+
+.picker-above-highlight.sc-ion-picker-md,.picker-below-highlight.sc-ion-picker-md{
+    background: rgba(0,0,0,.5);
+    border:none;
+}
+
+.picker-opt{
+    color:white;
+}

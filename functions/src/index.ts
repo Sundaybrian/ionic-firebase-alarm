@@ -10,6 +10,9 @@ exports.newAlarmNotification=functions.database.ref('UserAlarms/{userId}').onWri
     //grab alarm value
     const alarmValue=data.Alarm
 
+    //grab temporary state
+    const temporaryState=data.temporaryState
+
     //grab user id
     const userId=data.userId
 
@@ -29,14 +32,32 @@ exports.newAlarmNotification=functions.database.ref('UserAlarms/{userId}').onWri
     db.ref(`devices/${userId}`).on('value',function(snap){
 
         if(snap != null) {
-            token=snap.val()['token']
+            token = snap.val()['token']
         }
 
 
       })
 
+      if (temporaryState == 1) {
 
-    return admin.messaging().sendToDevice(token,payload)
+        //if temporary state is on don't send notification
+          return false
+          
+      } else {
+          //create alarm log
+       
+        // to be a cloud function
+        const d = new Date();
+        const time = d.getTime();
+        // const today = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
+       
+        // create alarm log
+        db.ref('UserAlarmLogs/' + userId).child(d.toDateString()).push(time);
+    
+        //then send notification
+          return admin.messaging().sendToDevice(token,payload)
+      }
+
+
 })
-
 

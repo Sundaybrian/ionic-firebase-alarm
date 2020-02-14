@@ -1,26 +1,35 @@
 <ion-app>
-    <ion-menu side="start" menuId="first" contentId="content1">
-        <ion-header>
-          <ion-toolbar color="primary">
-            <ion-title>Navigate</ion-title>
-          </ion-toolbar>
-        </ion-header>
-        <ion-content>
-          <ion-list>
-          <ion-menu-toggle auto-hide="true">
-            <ion-item  *ngFor="let pages of navigate" [routerLink]="pages.url" routerDirection="forward">
-                <ion-icon [name]="pages.icon" slot="start"></ion-icon>
-                   {{pages.title}} 
-            </ion-item>
-            <!--  -->
-            <ion-item (click)='logout()' routerDirection="forward">
-                <ion-icon name="log-out" slot="start"></ion-icon>
-                   Logout
-            </ion-item>
-            <!--  -->
+    <ion-menu side="start" menuId="first">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>
+             Alarm
+          </ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          <ion-menu-toggle>
+              <ion-item lines="none" routerLink="/home/tabs/alarm">
+                <ion-icon name="home" slot="start"></ion-icon>
+                <ion-label>Alarm</ion-label>
+              </ion-item>
           </ion-menu-toggle>
-          </ion-list>
-        </ion-content>
-      </ion-menu>
-  <ion-router-outlet id="content1"></ion-router-outlet>
+          <ion-menu-toggle>
+              <ion-item lines="none" routerLink="/home/tabs/logss">
+                <ion-icon name="clock" slot="start"></ion-icon>
+                <ion-label>Logs</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+            <ion-menu-toggle>
+                <ion-item lines="none" (click)="onLogout()" button>
+                    <ion-icon name="exit" slot="start"></ion-icon>
+                    <ion-label>Logout</ion-label>
+                  </ion-item>
+              </ion-menu-toggle> 
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+
+  <ion-router-outlet main></ion-router-outlet>
 </ion-app>

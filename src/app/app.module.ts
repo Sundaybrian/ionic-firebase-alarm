@@ -13,28 +13,35 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule} from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { FIREBASE_CREDENTIALS } from './firebase.credentials';
-import { AlarmPage } from './alarm/alarm.page';
+import { Network } from '@ionic-native/network/ngx';
 
 // importing fcm
 import { FCM } from '@ionic-native/fcm/ngx';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
-
+import { FormsModule } from '@angular/forms';
+import { environment } from 'src/environments/environment';
+import { NetworkStateService } from './Services/network-state.service';
 
 @NgModule({
-  declarations: [AppComponent,AlarmPage,LoadingSpinnerComponent],
-  entryComponents: [AlarmPage],
+  declarations: [
+    AppComponent,
+    LoadingSpinnerComponent
+  ],
+  entryComponents: [],
   imports: [
-      BrowserModule, 
-      IonicModule.forRoot(), 
+      BrowserModule,
+      IonicModule.forRoot(),
       AppRoutingModule,
-      AngularFireModule.initializeApp(FIREBASE_CREDENTIALS),
+      AngularFireModule.initializeApp(environment.firebase),
       AngularFireDatabaseModule,
-      AngularFireAuthModule
+      AngularFireAuthModule,
   ],
   providers: [
     StatusBar,
     SplashScreen,
     FCM,
+    Network,
+    NetworkStateService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

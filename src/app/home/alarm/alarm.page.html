@@ -1,0 +1,94 @@
+<ion-header>
+  <ion-toolbar [color]="networkStatus ? 'primary' : 'dark'">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ networkStatus ? 'Alarm' : 'Offline'}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+    <ion-content class="ion-padding" >
+      <ion-card *ngIf="!showTemporary" [color]=" alarmvalue==1 ? 'primary' : 'dark'">
+        <ion-card-header>
+          <ion-card-subtitle>Alarm State</ion-card-subtitle>
+          <ion-card-title>Alarm:{{alarmvalue}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content *ngIf="alarmvalue==0; else onAlarm">
+          Alarm is now off
+          <ion-icon name="notifications-off"></ion-icon>
+        </ion-card-content>
+        <ng-template #onAlarm>
+          <ion-card-content >
+            Alarm is now On
+            <ion-icon name="notifications"></ion-icon>
+          </ion-card-content>
+        </ng-template>
+      </ion-card>
+  
+            <ion-grid>
+              
+                <ion-row>
+                  <ion-col *ngIf="!showTemporary" size-sm="6">
+                    <ion-button 
+                    expand="block"
+                    (click)="toggleState()"
+                    [disabled]="!networkStatus"
+                    [color]=" alarmvalue==1 ? 'dark' : 'primary'"
+                      >{{stateText}}</ion-button>
+                  </ion-col>
+
+                  <ion-col *ngIf="!showTemporary" size-sm="6">
+                    
+                    <ion-button expand="block" (click)="temporaryOff()" color="secondary" [disabled]="!networkStatus">Temporary Off</ion-button>
+                  </ion-col>
+
+                  <ion-col *ngIf="showTemporary">
+                    <ion-item color="secondary">
+                        <ion-label>Temporary Disable</ion-label>
+                        <ion-datetime display-format="mm:ss" placeholder="Tap here" [(ngModel)]="fullTime"></ion-datetime>
+                      </ion-item>
+                  </ion-col>
+                </ion-row>
+
+
+
+            </ion-grid>
+        
+       
+        
+            <div class="circle-progress-container" *ngIf="showTemporary">
+                <circle-progress 
+              [percent]="percent"
+              [maxPercent]="100"
+              [radius]="radius"
+              [showSubtitle]="true"
+              [subtitle]="remainingTime"
+              [subtitleFontSize]="40"
+              [showUnits]="false"
+              [outerStrokeWidth]="16"
+              [outerStrokeColor]="'#8000FF'"
+              [showZeroOuterStroke]="false"
+              [backgroundStroke]="'#33003F'"
+              [backgroundStrokeWidth]="3"
+              [outerStrokeGradient]="true"
+              [outerStrokeGradientStopColor]="'#FF00CB'"
+              [showInnerStroke]="false"
+            ></circle-progress>
+            </div>
+        
+            <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="showTemporary">
+              <ng-container *ngIf="timer == false; else running">
+                <ion-fab-button (click)="startTime()">
+                  <ion-icon name="play"></ion-icon>
+                </ion-fab-button>
+              </ng-container>
+        
+              <ng-template #running>
+                <ion-fab-button (click)="stopTime()">
+                  <ion-icon name="square"></ion-icon>
+                </ion-fab-button>
+              </ng-template>
+            </ion-fab> 
+
+</ion-content>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase/app'
-import { AlertController, Platform ,ToastController} from '@ionic/angular';
+import { auth } from 'firebase/app';
+import { AlertController, Platform , ToastController} from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { FcmService } from '../Services/fcm.service';
@@ -14,69 +14,70 @@ import { FcmService } from '../Services/fcm.service';
 })
 export class RegisterPage implements OnInit {
 
-  username:string=""
-  password:string=""
-  cpassword:string=""
+  username = '';
+  password = '';
+  cpassword = '';
 
   constructor(
-            public afAuth:AngularFireAuth,
-            public alert:AlertController,
-            public route:Router,
-            public afdb:AngularFireDatabase,
-            
-    ) { 
-    
+            public afAuth: AngularFireAuth,
+            public alert: AlertController,
+            public route: Router,
+            public afdb: AngularFireDatabase,
+
+    ) {
+
     }
 
   ngOnInit() {
   }
 
 
-  async register(){
-    const{ username,password,cpassword }=this
+  async register() {
+    const{ username, password, cpassword } = this;
 
-      if(password !==cpassword){
-        this.showAlert("Error","Passwords dont match")
-        return console.error("Passwords dont match")
+    if (password !== cpassword) {
+        this.showAlert('Error', 'Passwords dont match');
+        return console.error('Passwords dont match');
       }
 
 
-      try {
+    try {
 
-        const res= await this.afAuth.auth.createUserWithEmailAndPassword(username,password)
+        const res = await this.afAuth.auth.createUserWithEmailAndPassword(username, password);
 
-        const userAlarmRef=this.afdb.database.ref('UserAlarms')
+        const userAlarmRef = this.afdb.database.ref('UserAlarms');
 
-        const userAlarmData={
+        const userAlarmData = {
           username,
-          userId:this.afAuth.auth.currentUser.uid,
-          Alarm:0
-          
-        }
+          userId: this.afAuth.auth.currentUser.uid,
+          Alarm: 0,
+          temporaryState: 0
 
-        userAlarmRef.child(userAlarmData.userId).set(userAlarmData)
+        };
 
-        this.showAlert("Succes","Welcome Aboard")
-        this.route.navigate(['/login'])
-    
+        userAlarmRef.child(userAlarmData.userId).set(userAlarmData);
+
+        this.showAlert('Succes', 'Welcome Aboard');
+        this.route.navigate(['/login']);
+
       } catch (error) {
-        console.dir(error) 
-        this.showAlert("Error",error.message)
+        console.dir(error);
+        this.showAlert('Error', error.message);
 
-      } 
+      }
 
   }
 
-  async showAlert(header:string,message:string){
-    const alert=await this.alert.create({
+  async showAlert(header: string, message: string) {
+    const alert = await this.alert.create({
       header,
       message,
-      buttons:["ok"]
-    })
+      buttons: ['ok']
+    });
 
-    await alert.present()
+    await alert.present();
   }
 
-    
+
 
 }

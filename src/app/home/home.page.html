@@ -1,33 +1,20 @@
-<!-- <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title  *ngIf="(afAuth.user | async )as user;">
-        {{user.email}}
-    </ion-title>
 
-    <ion-buttons (click)='logout()' slot="end">
-      <ion-button>
-        <ion-icon slot="icon-only" name="log-out"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    
-   
-  </ion-toolbar>
-</ion-header> -->
+<ion-content >
+        <!-- tabs for alarm page and logs -->
+        <ion-tabs>
+          <ion-tab-bar slot="bottom">
+            <ion-tab-button tab="alarm">
+              <ion-label>Alarm</ion-label>
+              <ion-icon name="home"></ion-icon>
+            </ion-tab-button>
 
-<ion-header>
-    <ion-toolbar color="primary">
-        <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-        </ion-buttons>
-      <ion-title>
-        Home
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
+            <ion-tab-button tab="logss">
+              <ion-label>Alarm Logs</ion-label>
+              <ion-icon name="clock"></ion-icon>
 
-<ion-content>
-  <div class="ion-padding">
-    <p>Alarm:{{alarmvalue}}</p>
-      <ion-button expand="block" (click)="toggleState()">{{stateText}}</ion-button>
-  </div>
+            </ion-tab-button>
+          </ion-tab-bar>
+
+        </ion-tabs>
+        <!-- end tabs -->
 </ion-content>

@@ -1,10 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { Platform, ToastController } from '@ionic/angular';
+import { Platform, ToastController, NavController, LoadingController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { AlarmPage } from './alarm/alarm.page';
-import { FcmService } from './Services/fcm.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 
@@ -14,45 +12,60 @@ import { Router } from '@angular/router';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-  navigate:any
+  navigate: any;
+  currentUser: any;
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    public afAuth:AngularFireAuth,
-    public router:Router
+    public afAuth: AngularFireAuth,
+    public router: Router,
+    public navCtrl: NavController,
+    public loadingCtrl: LoadingController,
+
   ) {
-    this.sideMenu()
+    // login user to the app after app has left background
+    this.resumeSession();
+
   }
 
-
-  sideMenu(){
-    this.navigate=[
-      {
-        title:"Home",
-        url:'/home',
-        icon:'home'
-      },
-      {
-        title:'Logs',
-        url:'/logs',
-        icon:'alarm'
-      }
-      // ,
-      // {
-      //   title:'Logout',
-      //   url:'/logout',
-      //   icon:'log-out'
-      // }
-    ]
+  ngOnInit() {
+    // fetch user
+    this.currentUser = this.afAuth.auth.currentUser.email;
+    console.log(this.currentUser);
   }
 
-  logout(){
-    this.afAuth.auth.signOut()
-    this.router.navigate(['/login'])
+  async resumeSession() {
+    // check if user is logged in and keep them there else redirect to homepage
+
+    const loading = await this.loadingCtrl.create({
+      message: 'Resuming session...',
+      duration: 2000,
+      spinner: 'bubbles'
+    });
+
+    await loading.present();
+    const { role, data } = await loading.onDidDismiss();
+
+    this.afAuth.auth.onAuthStateChanged((user) => {
+
+      // login user if session has not expired or redirect to login if it has
+      user ? this.router.navigate(['/home']) : this.router.navigate(['/auth']);
+
+    });
+
+
+  }
+
+  onLogout() {
+    // logout user
+    this.afAuth.auth.signOut();
+
+    // navigate to login page
+    this.router.navigate(['/login']);
   }
 
 }
