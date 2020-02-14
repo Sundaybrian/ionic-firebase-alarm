@@ -9,19 +9,33 @@
 
 
     <ion-content class="ion-padding" >
-        <div class="off-buttons">
+      <ion-card *ngIf="!showTemporary" [color]=" alarmvalue==1 ? 'primary' : 'dark'">
+        <ion-card-header>
+          <ion-card-subtitle>Alarm State</ion-card-subtitle>
+          <ion-card-title>Alarm:{{alarmvalue}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content *ngIf="alarmvalue==0; else onAlarm">
+          Alarm is now off
+          <ion-icon name="notifications-off"></ion-icon>
+        </ion-card-content>
+        <ng-template #onAlarm>
+          <ion-card-content >
+            Alarm is now On
+            <ion-icon name="notifications"></ion-icon>
+          </ion-card-content>
+        </ng-template>
+      </ion-card>
+  
             <ion-grid>
-              <ion-row>
-                  <ion-col size="6" offset="3" *ngIf="!showTemporary" size-sm="6">
-                      <ion-label>
-                          Alarm:{{alarmvalue}}
-                      </ion-label>
-                    </ion-col>
-              </ion-row>
-
+              
                 <ion-row>
                   <ion-col *ngIf="!showTemporary" size-sm="6">
-                    <ion-button expand="block" (click)="toggleState()" [disabled]="!networkStatus">{{stateText}}</ion-button>
+                    <ion-button 
+                    expand="block"
+                    (click)="toggleState()"
+                    [disabled]="!networkStatus"
+                    [color]=" alarmvalue==1 ? 'dark' : 'primary'"
+                      >{{stateText}}</ion-button>
                   </ion-col>
 
                   <ion-col *ngIf="!showTemporary" size-sm="6">
@@ -40,7 +54,7 @@
 
 
             </ion-grid>
-        </div>
+        
        
         
             <div class="circle-progress-container" *ngIf="showTemporary">
