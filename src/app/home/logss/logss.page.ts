@@ -13,32 +13,57 @@ import { SegmentChangeEventDetail } from '@ionic/core';
 export class LogssPage implements OnInit {
   myAlarmsObjs: any[] = [];
   myAlarmDatesData: Observable<any[]>;
+  myAlarmSwapData: any;
+  myTempoDatesData: Observable<any[]>;
+  myTempoSwapData: any;
   userId: any;
   // testAlarm:Observable<any[]>=[]
 
   constructor(
     private afdb: AngularFireDatabase,
     public afAuth: AngularFireAuth
-  ) {}
+    ) {
+      this.userId = this.afAuth.auth.currentUser.uid;
+
+    }
 
   ngOnInit() {
     this.getMyAlarms();
+    this.getMyTempo();
   }
 
   getMyAlarms() {
-    this.userId = this.afAuth.auth.currentUser.uid;
 
-    this.myAlarmDatesData = this.afdb
+    // fetch time on logs
+   this.myAlarmSwapData = this.myAlarmDatesData = this.afdb
       .list('UserAlarmLogs/' + this.userId)
-.snapshotChanges().pipe(
-      map(changes =>
-        changes.map(c => ({ key: c.payload.key, ...c.payload.val() as {}}))
-      )
-    );
+      .snapshotChanges()
+      .pipe(
+        map(changes =>
+          changes.map(c => ({ key: c.payload.key, ...(c.payload.val() as {}) }))
+        )
+      );
+  }
+
+  getMyTempo() {
+    // fetch temporary logs
+    this.myTempoSwapData = this.myAlarmDatesData = this.afdb
+      .list('UserTemporaryLogs/' + this.userId)
+      .snapshotChanges()
+      .pipe(
+        map(changes =>
+          changes.map(c => ({ key: c.payload.key, ...(c.payload.val() as {}) }))
+        )
+      );
   }
 
   onFilterLogs(event: CustomEvent<SegmentChangeEventDetail>) {
-    console.log(event);
-
+    if (event.detail.value === 'on') {
+      // render the time on logs
+      this.myAlarmDatesData = this.myAlarmSwapData;
+    } else {
+      // render the temporary off logs
+      this.myAlarmDatesData = this.myTempoSwapData;
+    }
   }
 }
