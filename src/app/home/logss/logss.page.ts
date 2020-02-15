@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { SegmentChangeEventDetail } from '@ionic/core';
 
 @Component({
   selector: 'app-logss',
@@ -31,8 +32,13 @@ export class LogssPage implements OnInit {
       .list('UserAlarmLogs/' + this.userId)
 .snapshotChanges().pipe(
       map(changes =>
-        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
+        changes.map(c => ({ key: c.payload.key, ...c.payload.val() as {}}))
       )
     );
+  }
+
+  onFilterLogs(event: CustomEvent<SegmentChangeEventDetail>) {
+    console.log(event);
+
   }
 }
