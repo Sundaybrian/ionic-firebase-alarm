@@ -16,12 +16,10 @@
   </ion-segment>
   <ion-list *ngFor="let alarm of myAlarmDatesData | async">
       <ion-list-header>
-        Date:{{alarm.key}}
+        Date:{{alarm.key }}
+  
       </ion-list-header>
-      <ion-item *ngFor="let item of alarm | keyvalue">
-          Time On:{{item.value | date:'short':'+0300' }}
-      </ion-item>
-      
+     <time-on [alarm]= alarm></time-on>     
     </ion-list>
 
 </ion-content>

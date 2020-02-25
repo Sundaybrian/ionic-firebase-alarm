@@ -11,7 +11,6 @@ import { SegmentChangeEventDetail } from '@ionic/core';
   styleUrls: ['./logss.page.scss']
 })
 export class LogssPage implements OnInit {
-  myAlarmsObjs: any[] = [];
   myAlarmDatesData: Observable<any[]>;
   myAlarmSwapData: any;
   myTempoDatesData: Observable<any[]>;

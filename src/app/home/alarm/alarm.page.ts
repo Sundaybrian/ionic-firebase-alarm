@@ -90,7 +90,6 @@ export class AlarmPage implements OnInit {
       // before we determine the connection type. Might need to wait.
       // prior to doing any api requests as well.
     });
-    
   }
 
   ngOnInit() {
@@ -277,6 +276,8 @@ export class AlarmPage implements OnInit {
 
     // create temporary off logs
     this.afdb.database.ref('UserTemporaryLogs/' + this.userID ).child(d.toDateString()).push(time);
+    // 
+    console.log(time);
 
   }
 }
