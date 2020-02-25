@@ -14,12 +14,12 @@
     <ion-segment-button value="on" checked>Time On Logs</ion-segment-button>
     <ion-segment-button value="temporary">Temporary Off Logs</ion-segment-button>
   </ion-segment>
-  <ion-list *ngFor="let alarm of myAlarmDatesData | async">
+  <ion-list *ngFor="let alarm of myAlarmDatesData | async ">
       <ion-list-header>
         Date:{{alarm.key }}
   
       </ion-list-header>
-     <time-on [alarm]= alarm></time-on>     
+     <time-on [alarm]="alarm"></time-on>     
     </ion-list>
 
 </ion-content>

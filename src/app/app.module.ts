@@ -25,7 +25,7 @@ import { NetworkStateService } from './Services/network-state.service';
 @NgModule({
   declarations: [
     AppComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
   ],
   entryComponents: [],
   imports: [
