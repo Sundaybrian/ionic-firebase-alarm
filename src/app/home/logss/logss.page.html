@@ -17,7 +17,6 @@
   <ion-list *ngFor="let alarm of myAlarmDatesData | async ">
       <ion-list-header>
         Date:{{alarm.key }}
-  
       </ion-list-header>
      <time-on [alarm]="alarm"></time-on>     
     </ion-list>

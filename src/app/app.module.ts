@@ -12,7 +12,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule} from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { FIREBASE_CREDENTIALS } from './firebase.credentials';
 import { Network } from '@ionic-native/network/ngx';
 
 // importing fcm
@@ -21,6 +20,11 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
 import { FormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { NetworkStateService } from './Services/network-state.service';
+
+import { SQLite } from '@ionic-native/sqlite/ngx';
+import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -35,6 +39,7 @@ import { NetworkStateService } from './Services/network-state.service';
       AngularFireModule.initializeApp(environment.firebase),
       AngularFireDatabaseModule,
       AngularFireAuthModule,
+      HttpClientModule
   ],
   providers: [
     StatusBar,
@@ -42,6 +47,8 @@ import { NetworkStateService } from './Services/network-state.service';
     FCM,
     Network,
     NetworkStateService,
+    SQLite,
+    SQLitePorter,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
