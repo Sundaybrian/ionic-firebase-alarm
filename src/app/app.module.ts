@@ -24,6 +24,7 @@ import { NetworkStateService } from './Services/network-state.service';
 import { SQLite } from '@ionic-native/sqlite/ngx';
 import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
 import { HttpClientModule } from '@angular/common/http';
+import { DbService } from './Services/db.service';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { HttpClientModule } from '@angular/common/http';
     NetworkStateService,
     SQLite,
     SQLitePorter,
+    DbService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

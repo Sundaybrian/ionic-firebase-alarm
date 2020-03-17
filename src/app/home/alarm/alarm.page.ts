@@ -7,6 +7,8 @@ import { auth } from 'firebase/app';
 import { Router } from '@angular/router';
 import { NetworkStateService } from 'src/app/Services/network-state.service';
 import { Network } from '@ionic-native/network/ngx';
+import { DbService } from 'src/app/Services/db.service';
+
 
 @Component({
   selector: 'app-alarm',
@@ -24,6 +26,7 @@ export class AlarmPage implements OnInit {
   networkStatus: any;
   connectSubscription$: Subscription = null;
   disconnectSubscription$: Subscription = null;
+  Data: any[] = [];
 
   devicesRef: any;
 
@@ -60,7 +63,8 @@ export class AlarmPage implements OnInit {
     private alertCtrl: AlertController,
     private networkService: NetworkStateService,
     private network: Network,
-    public ngZone: NgZone
+    public ngZone: NgZone,
+    private db: DbService,
   ) {
     // check internet connection
     // watch network for a disconnection
@@ -101,6 +105,16 @@ export class AlarmPage implements OnInit {
     } else {
       this.networkStatus = false ;
     }
+
+    // check db state
+    this.db.dbState().subscribe((rdy) => {
+      if (rdy) {
+        this.db.fetchAlarms()
+          .subscribe(arg => {
+            this.Data = arg;
+          });
+      }
+    });
 
   }
 
@@ -235,9 +249,11 @@ export class AlarmPage implements OnInit {
       this.afdb.object('UserAlarms/' + this.userID + '/Alarm').set(0);
       this.state = false;
       this.showTemporary = false;
+      this.storeData(this.userID, 'OFF', new Date());
     } else {
       this.stateText = 'Turn On';
       this.afdb.object('UserAlarms/' + this.userID + '/Alarm').set(1);
+      this.storeData(this.userID, 'ON', new Date());
 
       // toogle the temporary state to 0 in the db
       this.afdb.object('UserAlarms/' + this.userID + '/temporaryState').set(0);
@@ -276,8 +292,15 @@ export class AlarmPage implements OnInit {
 
     // create temporary off logs
     this.afdb.database.ref('UserTemporaryLogs/' + this.userID ).child(d.toDateString()).push(time);
-    // 
-    console.log(time);
+    this.storeData(this.userID, 'TEMPORARY OFF', new Date());
 
+  }
+
+  storeData(userId, alarmtype, date) {
+    this.db.addAlarm({
+      user_id: userId,
+      alarm_type: alarmtype,
+      date_created: date
+    });
   }
 }

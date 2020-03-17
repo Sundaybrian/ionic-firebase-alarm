@@ -27,7 +27,19 @@
   
       </ion-card-content>
     </ng-template>
+
+    
+    <ion-item lines="inset" *ngFor="let data of Data">
+      <ion-label>
+        <h5>{{ data.user_id }}</h5>
+        <p>{{ data.alarm_type }}</p>
+        <p>{{data.date_created }}</p>
+      </ion-label>
+    </ion-item>
+
   </ion-card>
+
+  
   
   <ion-grid>
     <ion-row>
