@@ -7,6 +7,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { FcmService } from './Services/fcm.service';
 import { AuthService } from './auth/auth.service';
+import { DbService } from './Services/db.service';
 
 
 @Component({
@@ -29,6 +30,7 @@ export class AppComponent implements OnInit {
     public loadingCtrl: LoadingController,
     public fcm: FcmService,
     public authService: AuthService,
+    public db: DbService
 
   ) {
     this.initializeApp();
@@ -44,6 +46,7 @@ export class AppComponent implements OnInit {
       // this.splashScreen.hide();
       // check networl state
       this.notificationsSetup();
+      this.db.create();
     });
   }
 
