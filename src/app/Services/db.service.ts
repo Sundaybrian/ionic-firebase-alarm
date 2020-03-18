@@ -26,12 +26,12 @@ export class DbService {
 
     this.plt.ready().then(() => {
       this.sqlite.create({
-        name: 'alarm.db',
+        name: 'alarm3.db',
         location: 'default'
       }).then((db: SQLiteObject)=> {
         this.storage = db;
         this.seedDatabase();
-      })
+      });
     });
 
   }
@@ -45,7 +45,7 @@ export class DbService {
   }
 
   seedDatabase() {
-    this.httpClient.get('assests/dump.sql', {responseType: 'text'})
+    this.httpClient.get('src/assets/dump.sql', {responseType: 'text'})
     .subscribe( data => {
         this.sqlPorter.importJsonToDb(this.storage, data)
         .then(_ => {
@@ -54,6 +54,7 @@ export class DbService {
         })
         .catch( err => console.log(err));
       });
+
   }
 
   // get list
@@ -83,5 +84,5 @@ export class DbService {
 
   }
 
-  
+
 }

@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { NetworkStateService } from 'src/app/Services/network-state.service';
 import { Network } from '@ionic-native/network/ngx';
 import { DbService } from 'src/app/Services/db.service';
+import { AlarmLog } from 'src/app/models/alarmLog';
 
 
 @Component({
@@ -26,7 +27,7 @@ export class AlarmPage implements OnInit {
   networkStatus: any;
   connectSubscription$: Subscription = null;
   disconnectSubscription$: Subscription = null;
-  Data: any[] = [];
+  Data: AlarmLog[] = [];
 
   devicesRef: any;
 
@@ -110,8 +111,8 @@ export class AlarmPage implements OnInit {
     this.db.dbState().subscribe((rdy) => {
       if (rdy) {
         this.db.fetchAlarms()
-          .subscribe(arg => {
-            this.Data = arg;
+          .subscribe(logs => {
+            this.Data = logs;
           });
       }
     });
@@ -249,11 +250,11 @@ export class AlarmPage implements OnInit {
       this.afdb.object('UserAlarms/' + this.userID + '/Alarm').set(0);
       this.state = false;
       this.showTemporary = false;
-      this.storeData(this.userID, 'OFF', new Date());
+      this.storeData(this.userID, 'OFF', new Date().getTime());
     } else {
       this.stateText = 'Turn On';
       this.afdb.object('UserAlarms/' + this.userID + '/Alarm').set(1);
-      this.storeData(this.userID, 'ON', new Date());
+      this.storeData(this.userID, 'ON', new Date().getTime());
 
       // toogle the temporary state to 0 in the db
       this.afdb.object('UserAlarms/' + this.userID + '/temporaryState').set(0);
@@ -292,15 +293,17 @@ export class AlarmPage implements OnInit {
 
     // create temporary off logs
     this.afdb.database.ref('UserTemporaryLogs/' + this.userID ).child(d.toDateString()).push(time);
-    this.storeData(this.userID, 'TEMPORARY OFF', new Date());
+    this.storeData(this.userID, 'TEMPORARY OFF', new Date().getTime());
 
   }
 
   storeData(userId, alarmtype, date) {
-    this.db.addAlarm({
-      user_id: userId,
-      alarm_type: alarmtype,
-      date_created: date
+    this.db.addAlarm(
+      userId,
+      alarmtype,
+      date
+    ).then(_ =>{
+      console.log('done');
     });
   }
 }
