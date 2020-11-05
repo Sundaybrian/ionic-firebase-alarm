@@ -6,6 +6,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { LogssPage } from './logss.page';
+import { TimeOnComponent } from './time-on/time-on.component';
+import { KeyRemover } from 'src/app/pipes/keyremover';
+
 
 const routes: Routes = [
   {
@@ -21,6 +24,10 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [LogssPage]
+  declarations: [
+    LogssPage,
+    TimeOnComponent,
+    KeyRemover
+  ]
 })
 export class LogssPageModule {}

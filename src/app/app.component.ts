@@ -5,6 +5,9 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { FcmService } from './Services/fcm.service';
+import { AuthService } from './auth/auth.service';
+
 
 
 @Component({
@@ -25,17 +28,39 @@ export class AppComponent implements OnInit {
     public router: Router,
     public navCtrl: NavController,
     public loadingCtrl: LoadingController,
-
+    public fcm: FcmService,
+    public authService: AuthService,
   ) {
+    this.initializeApp();
     // login user to the app after app has left background
     this.resumeSession();
+  }
 
+  initializeApp() {
+    this.platform.ready().then(() => {
+      // this.statusBar.styleDefault();
+      // this.splashScreen.hide();
+      // check networl state
+      this.notificationsSetup();
+    });
+  }
+
+  // notifications setup
+  private notificationsSetup() {
+    this.fcm.getToken();
+    this.fcm.onNotifications().subscribe(msg => {
+      if (msg.wasTapped) {
+        this.authService.presentToast(msg.wasTapped);
+      } else {
+        this.authService.presentToast(msg.body);
+      }
+    });
   }
 
   ngOnInit() {
-    // fetch user
+    // fetch current authenticated user
     this.currentUser = this.afAuth.auth.currentUser.email;
-    console.log(this.currentUser);
+  
   }
 
   async resumeSession() {

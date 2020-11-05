@@ -1,17 +1,20 @@
-import { Component, OnInit, NgZone } from "@angular/core";
-import { NavController, Platform, AlertController } from "@ionic/angular";
-import { AngularFireDatabase } from "@angular/fire/database";
-import { Observable, Subscription } from "rxjs";
-import { AngularFireAuth } from "@angular/fire/auth";
-import { auth } from "firebase/app";
-import { Router } from "@angular/router";
-import { NetworkStateService } from "src/app/Services/network-state.service";
-import { Network } from "@ionic-native/network/ngx";
+import { Component, OnInit, NgZone } from '@angular/core';
+import { NavController, Platform, AlertController } from '@ionic/angular';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { Observable, Subscription } from 'rxjs';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { auth } from 'firebase/app';
+import { Router } from '@angular/router';
+import { NetworkStateService } from 'src/app/Services/network-state.service';
+import { Network } from '@ionic-native/network/ngx';
+import { DbService } from 'src/app/Services/db.service';
+import { AlarmLog } from 'src/app/models/alarmLog';
+
 
 @Component({
-  selector: "app-alarm",
-  templateUrl: "./alarm.page.html",
-  styleUrls: ["./alarm.page.scss"]
+  selector: 'app-alarm',
+  templateUrl: './alarm.page.html',
+  styleUrls: ['./alarm.page.scss']
 })
 export class AlarmPage implements OnInit {
   state = true;
@@ -24,6 +27,7 @@ export class AlarmPage implements OnInit {
   networkStatus: any;
   connectSubscription$: Subscription = null;
   disconnectSubscription$: Subscription = null;
+  Data: AlarmLog[] = [];
 
   devicesRef: any;
 
@@ -31,23 +35,23 @@ export class AlarmPage implements OnInit {
   percent = 0;
   progress: any = 0;
   radius = 100;
-  fullTime = "00:03:30";
+  fullTime = '00:03:30';
   timer: any = false;
 
   minutes: any = 3;
   seconds: any = 30;
 
   elapsed: any = {
-    h: "00",
-    m: "00",
-    s: "00"
+    h: '00',
+    m: '00',
+    s: '00'
   };
 
   countDownTimer: any = false;
   timeLeft: any = {
-    h: "00",
-    m: "00",
-    s: "00"
+    h: '00',
+    m: '00',
+    s: '00'
   };
   remainingTime = `${this.timeLeft.m}:${this.timeLeft.s}`;
 
@@ -60,7 +64,8 @@ export class AlarmPage implements OnInit {
     private alertCtrl: AlertController,
     private networkService: NetworkStateService,
     private network: Network,
-    public ngZone: NgZone
+    public ngZone: NgZone,
+    private db: DbService,
   ) {
     // check internet connection
     // watch network for a disconnection
@@ -77,7 +82,7 @@ export class AlarmPage implements OnInit {
       this.networkService.presentToast(`You're online! 😄 `);
       this.ngZone.run(() => {
         setTimeout(() => {
-          if (this.network.type !== "none") {
+          if (this.network.type !== 'none') {
             this.networkService.presentToast(
               `You got! 😄 ${this.network.type}`
             );
@@ -90,7 +95,6 @@ export class AlarmPage implements OnInit {
       // before we determine the connection type. Might need to wait.
       // prior to doing any api requests as well.
     });
-    
   }
 
   ngOnInit() {
@@ -103,13 +107,23 @@ export class AlarmPage implements OnInit {
       this.networkStatus = false ;
     }
 
+    // check db state
+    this.db.dbState().subscribe((rdy) => {
+      if (rdy) {
+        this.db.fetchAlarms()
+          .subscribe(logs => {
+            this.Data = logs;
+          });
+      }
+    });
+
   }
 
   startTime() {
-    console.log("start temporary time");
+    console.log('start temporary time');
 
     // toogle the temporary state to 1 in the db
-    this.afdb.object("UserAlarms/" + this.userID + "/temporaryState").set(1);
+    this.afdb.object('UserAlarms/' + this.userID + '/temporaryState').set(1);
 
     if (this.timer) {
       clearInterval(this.timer);
@@ -120,7 +134,7 @@ export class AlarmPage implements OnInit {
     this.percent = 0;
     this.progress = 0;
 
-    const timeSplit = this.fullTime.split(":");
+    const timeSplit = this.fullTime.split(':');
     this.minutes = timeSplit[1];
     this.seconds = timeSplit[2];
 
@@ -145,7 +159,7 @@ export class AlarmPage implements OnInit {
 
           // toogle the temporary state to 0 in the db once timer ends
           this.afdb
-            .object("UserAlarms/" + this.userID + "/temporaryState")
+            .object('UserAlarms/' + this.userID + '/temporaryState')
             .set(0);
 
           this.state = true;
@@ -163,15 +177,15 @@ export class AlarmPage implements OnInit {
 
       this.percent = Math.floor((this.progress / totalSeconds) * 100);
 
-      console.log("here");
+      console.log('here');
       this.progress++;
     }, 1000);
   }
 
   pad(num, size) {
-    let s = num + "";
+    let s = num + '';
     while (s.length < size) {
-      s = "0" + s;
+      s = '0' + s;
     }
     return s;
   }
@@ -184,14 +198,14 @@ export class AlarmPage implements OnInit {
     this.percent = 0;
     this.progress = 0;
     this.elapsed = {
-      h: "00",
-      m: "00",
-      s: "00"
+      h: '00',
+      m: '00',
+      s: '00'
     };
     this.timeLeft = {
-      h: "00",
-      m: "00",
-      s: "00"
+      h: '00',
+      m: '00',
+      s: '00'
     };
     this.remainingTime = `${this.timeLeft.m}:${this.timeLeft.s}`;
 
@@ -199,7 +213,7 @@ export class AlarmPage implements OnInit {
     // this.afdb.object('UserAlarms/' + this.userID + '/Alarm').set(0);
 
     // toogle the temporary state to 0 in the db once timer ends
-    this.afdb.object("UserAlarms/" + this.userID + "/temporaryState").set(0);
+    this.afdb.object('UserAlarms/' + this.userID + '/temporaryState').set(0);
 
     // toggle states
     this.state = true;
@@ -209,19 +223,19 @@ export class AlarmPage implements OnInit {
   toggleState() {
     // tslint:disable-next-line: triple-equals
     if (this.alarmvalue == 1) {
-      this.stateText = "Turn Off";
+      this.stateText = 'Turn Off';
       // need to inject a modal or action sheet for the user to actually decide to turn off or temporary disable the alarm
       this.alertCtrl
         .create({
-          header: "Choose an action",
-          message: "Turn off temporarily or turn off completely?",
+          header: 'Choose an action',
+          message: 'Turn off temporarily or turn off completely?',
           buttons: [
             {
-              text: "Turn Off",
-              role: "cancel"
+              text: 'Turn Off',
+              role: 'cancel'
             },
             {
-              text: "Turn Off Temporarily",
+              text: 'Turn Off Temporarily',
               handler: () => {
                 // call temporary off
                 this.temporaryOff();
@@ -233,15 +247,17 @@ export class AlarmPage implements OnInit {
           alertEl.present();
         });
 
-      this.afdb.object("UserAlarms/" + this.userID + "/Alarm").set(0);
+      this.afdb.object('UserAlarms/' + this.userID + '/Alarm').set(0);
       this.state = false;
       this.showTemporary = false;
+      this.storeData(this.userID, 'OFF', new Date().getTime());
     } else {
-      this.stateText = "Turn On";
-      this.afdb.object("UserAlarms/" + this.userID + "/Alarm").set(1);
+      this.stateText = 'Turn On';
+      this.afdb.object('UserAlarms/' + this.userID + '/Alarm').set(1);
+      this.storeData(this.userID, 'ON', new Date().getTime());
 
       // toogle the temporary state to 0 in the db
-      this.afdb.object("UserAlarms/" + this.userID + "/temporaryState").set(0);
+      this.afdb.object('UserAlarms/' + this.userID + '/temporaryState').set(0);
       this.state = true;
     }
   }
@@ -252,7 +268,7 @@ export class AlarmPage implements OnInit {
 
     // grab the current logged in user alarm reference
     this.alarmRef = this.afdb
-      .object("UserAlarms/" + this.userID + "/Alarm")
+      .object('UserAlarms/' + this.userID + '/Alarm')
       .valueChanges();
 
     // subcribe to the alarm ref obervable for the value changes
@@ -260,20 +276,34 @@ export class AlarmPage implements OnInit {
       this.alarmvalue = x;
       // tslint:disable-next-line: triple-equals
       if (this.alarmvalue == 1) {
-        this.stateText = "Turn Off";
+        this.stateText = 'Turn Off';
         this.state = true;
       } else {
-        this.stateText = "Turn On";
+        this.stateText = 'Turn On';
         this.state = false;
       }
     });
   }
 
   temporaryOff() {
-    console.log("temporary clicked");
+    console.log('temporary clicked');
     this.showTemporary = true;
+    const d = new Date();
+    const time = d.getTime();
 
-    // // toogle the temporary state to 1 in the db
-    // this.afdb.object('UserAlarms/' + this.userID + '/temporaryState').set(1);
+    // create temporary off logs
+    this.afdb.database.ref('UserTemporaryLogs/' + this.userID ).child(d.toDateString()).push(time);
+    this.storeData(this.userID, 'TEMPORARY OFF', new Date().getTime());
+
+  }
+
+  storeData(userId, alarmtype, date) {
+    this.db.addAlarm(
+      userId,
+      alarmtype,
+      date
+    ).then(_ =>{
+      console.log('done');
+    });
   }
 }

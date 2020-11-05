@@ -10,14 +10,15 @@
 </ion-header>
 
 <ion-content >
-  <ion-list *ngFor="let alarm of myAlarmDatesData | async">
+  <ion-segment (ionChange)="onFilterLogs($event)">
+    <ion-segment-button value="on" checked>Time On Logs</ion-segment-button>
+    <ion-segment-button value="temporary">Temporary Off Logs</ion-segment-button>
+  </ion-segment>
+  <ion-list *ngFor="let alarm of myAlarmDatesData | async ">
       <ion-list-header>
-        Date:{{alarm.key}}
+        Date:{{alarm.key }}
       </ion-list-header>
-      <ion-item *ngFor="let item of alarm | keyvalue">
-          Time On:{{item.value | date:'short':'+0300' }}
-      </ion-item>
-      
+     <time-on [alarm]="alarm"></time-on>     
     </ion-list>
 
 </ion-content>

@@ -16,7 +16,6 @@ export class AuthService {
     public router: Router,
     public fcm: FcmService,
     public alert: AlertController,
-    private platform: Platform,
     public loadingctrl: LoadingController,
     public toastcontroller: ToastController,
     public afdb: AngularFireDatabase,
@@ -40,7 +39,7 @@ export class AuthService {
       const { role, data } = await loading.onDidDismiss();
 
       // call initialize app to setup the notification
-      this.initializeApp();
+      // this.initializeApp();
 
       // navigate user to home page
       this.router.navigate(['/home']);
@@ -94,34 +93,13 @@ export class AuthService {
   }
 
   // adding a toast
-  private async presentToast(message) {
+   async presentToast(message) {
     const toast = await this.toastcontroller.create({
       message,
       duration: 3000
 
     });
     toast.present();
-  }
-
-  initializeApp() {
-    this.platform.ready().then(() => {
-      // this.statusBar.styleDefault();
-      // this.splashScreen.hide();
-      // check networl state
-      this.notificationsSetup();
-    });
-  }
-
-  // notifications setup
-  private notificationsSetup() {
-    this.fcm.getToken();
-    this.fcm.onNotifications().subscribe(msg => {
-      if (msg.wasTapped) {
-        this.presentToast(msg.wasTapped);
-      } else {
-        this.presentToast(msg.body);
-      }
-    });
-  }
+  }  
 
 }
